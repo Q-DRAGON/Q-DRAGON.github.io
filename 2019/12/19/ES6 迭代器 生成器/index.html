@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ES6 迭代器 生成器 | Hexo</title>
+  
+  
+  
+  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css"-->
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+<div class="Shell">
+    <aside class='SideBar'>
+    <section class='avatar' style="background-image: url()">
+        <div class='av-pic' style="background-image: url()">
+        </div>
+    </section>
+    <section class='menu'>
+        <div>Hexo</div>
+        
+        <ul>
+          
+            <a href="/" class="Btn">
+              <li>Home</li>
+            </a>  
+          
+            <a href="/archives/" class="Btn">
+              <li>Archive</li>
+            </a>  
+          
+        </ul>
+    </section>
+    <section class="media">
+        
+    </section>
+</aside>
+
+    <div class="container">
+        <div data-pager-shell>
+            <div>
+  <article class='ContentView'>
+    <header class='PageTitle'>
+        <h1>ES6 迭代器 生成器</h1>
+    </header>
+
+    <section>
+      <p>迭代器是一个对象。<br>生成器是用来返回迭代器的函数。</p>
+<blockquote>
+<p>ES6 封装了一个生成器用来创建迭代器</p>
+</blockquote>
+<p>迭代器这个对象有 next() 方法返回结果对象，这个结果对象有下一个返回值 value、迭代完成布尔值 done，下面是一个 ES5 创建的迭代器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 这是创建迭代器的函数，return 里才是迭代器</span><br><span class="line">&#x2F;&#x2F; 返回的是 return &#123; value: value, done: done&#125;</span><br><span class="line">&#x2F;&#x2F; 那么这个 value 和 done 该显示什么样的遍历结果呢？</span><br><span class="line">&#x2F;&#x2F; done 是布尔判断 i &gt;&#x3D; items.length</span><br><span class="line">&#x2F;&#x2F; value 是当 done 为 True,就显示 undefined, 否则就打印 value</span><br><span class="line"></span><br><span class="line">function createIterator(items) &#123;</span><br><span class="line">  var i &#x3D; 0;</span><br><span class="line">  return &#123; &#x2F;&#x2F; 返回一个迭代器对象</span><br><span class="line">    next: function() &#123; &#x2F;&#x2F; 迭代器对象一定有个next()方法</span><br><span class="line">      var done &#x3D; (i &gt;&#x3D; items.length);</span><br><span class="line">      var value &#x3D; !done ? items[i++] : undefined;</span><br><span class="line">      return &#123; &#x2F;&#x2F; next()方法返回结果对象</span><br><span class="line">        value: value,</span><br><span class="line">        done: done</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var iterator &#x3D; createIterator([1, 2, 3]);</span><br><span class="line"></span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 1, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 2, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 3, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: undefiend, done: true&#125;&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 之后所有的调用都会返回相同内容</span><br><span class="line"></span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: undefiend, done: true&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>下面是生成器的例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 函数生成器加 * 是生成器的套路</span><br><span class="line">&#x2F;*</span><br><span class="line">*createIterator 生成器函数内部，做了什么呢？</span><br><span class="line">for 循环不断从数组中生成新的元素放入迭代器中，</span><br><span class="line">每遇到一个yield语句循环都会停止</span><br><span class="line">每次调用迭代器的next()方法，循环便继续运行并停止在下一条 yield 语句处。</span><br><span class="line">*&#x2F;</span><br><span class="line"></span><br><span class="line">function *createIterator(items) &#123;</span><br><span class="line">  for(let i&#x3D;0; i &lt; items.length; i++) &#123;</span><br><span class="line">    yield items[i];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let iterator &#x3D; createIterator([1, 2, 3]);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 既然生成器返回的是迭代器，自然就可以调用迭代器的next()方法</span><br><span class="line"></span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 1, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 2, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 3, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: undefiend, done: true&#125;&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 之后所有的调用都会返回相同内容</span><br><span class="line"></span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: undefiend, done: true&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>yield:</p>
+<p>切菜，切到一半去上厕所，上完厕所回来你不可能重头切，你是从刚才切的地方继续，刚才切的地方就是 yield</p>
+<p><strong>ES 6 里所有的集合对象（Set，Map, 数组) 和字符串都是可迭代的对象，它们都各自绑定了默认的迭代器。</strong></p>
+<h2 id="总结以下："><a href="#总结以下：" class="headerlink" title="总结以下："></a>总结以下：</h2><ol>
+<li><p>ES 6 有集合对象(Set,Map,数组)，有字符串。</p>
+</li>
+<li><p>ES 6 里有三种默认迭代器： entries(),values(),keys()</p>
+</li>
+<li><p>ES 6 里 所有集合对象 和 字符串 都是可迭代对象，它们都绑定了默认的 迭代器 和 Symbol.iterator 属性。猜猜就知道，数组和Set集合的默认迭代器是 values()，Map 集合的默认迭代器是 entries()</p>
+</li>
+</ol>
+<blockquote>
+<p>entries() 返回一个迭代器，其值为多个键值对。如果是数组，第一个元素是索引位置；如果是Set集合，第一个元素与第二个元素一样，都是值。<br>values() 返回一个迭代器，其值为集合的值。<br>keys() 返回一个迭代器，其值为集合中的所有键名。如果是数组，返回的是索引；如果是Set集合，返回的是值（Set的值被同时用作键和值）</p>
+</blockquote>
+<ol start="4">
+<li><p>你可以返回这些迭代器，也就是操作这些可迭代对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 操作方法之一 解构</span><br><span class="line">for(let [key, value] of data) &#123;</span><br><span class="line">  console.log(key + &quot;&#x3D;&quot; + value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 操纵方法之二 展开运算符</span><br><span class="line">let set &#x3D; new Set([1, 2, 3, 4, 5]),</span><br><span class="line"></span><br><span class="line">  array &#x3D; [...set];</span><br><span class="line"></span><br><span class="line">console.log(array); &#x2F;&#x2F; [1,2,3,4,5]</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 操作方法之三 生成器，上面写过了，这里省略。</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 操纵方法之四 for...of 循环(单纯的 for of 循环)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>你可以自定义迭代器，猜猜就知道，那就是改写 Symbol.iterator 属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 在这里，我们把 items 这个对象，挂上 Symbol.iterator 属性，绑定了迭代器。</span><br><span class="line">let collection &#x3D; &#123;</span><br><span class="line"> items: [11,22,33],</span><br><span class="line"> *[Symbol.iterator]() &#123;</span><br><span class="line">  for (let item of this.items)&#123;</span><br><span class="line">   yield item</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(isIterator(collection)) &#x2F;&#x2F; true</span><br><span class="line">for (let item of collection)&#123;</span><br><span class="line"> console.log(item) &#x2F;&#x2F; 11 22 33</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>参考网站：<br><a href="https://www.jianshu.com/p/ec95c30f0e25" target="_blank" rel="noopener">https://www.jianshu.com/p/ec95c30f0e25</a></p>
+
+
+      
+
+    </section>
+    
+      <section class='ArticleMeta'>
+          <div>
+            发布于&nbsp;
+            <time datetime="2019-12-19T06:20:28.000Z" itemprop="datePublished">
+              2019-12-19
+            </time>
+          </div>
+          
+      </section>
+    
+    
+</article>
+
+  
+</div>
+
+            <footer>
+    <div>© 2019 - John Doe </div>
+    <div>
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+        </span>
+        ,
+        <span>
+            Theme - <a href="https://github.com/nameoverflow/hexo-theme-icalm" target="_blank" rel="noopener">Icalm</a>
+        </span>
+    </div>
+</footer>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/pager/dist/singlepager.js"></script>
+
+<script>
+var sp = new Pager('data-pager-shell')
+
+</script>
+</body>
+</html>

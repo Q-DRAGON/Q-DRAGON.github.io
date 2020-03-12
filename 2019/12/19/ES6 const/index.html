@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ES6 let | Hexo</title>
+  
+  
+  
+  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css"-->
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+<div class="Shell">
+    <aside class='SideBar'>
+    <section class='avatar' style="background-image: url()">
+        <div class='av-pic' style="background-image: url()">
+        </div>
+    </section>
+    <section class='menu'>
+        <div>Hexo</div>
+        
+        <ul>
+          
+            <a href="/" class="Btn">
+              <li>Home</li>
+            </a>  
+          
+            <a href="/archives/" class="Btn">
+              <li>Archive</li>
+            </a>  
+          
+        </ul>
+    </section>
+    <section class="media">
+        
+    </section>
+</aside>
+
+    <div class="container">
+        <div data-pager-shell>
+            <div>
+  <article class='ContentView'>
+    <header class='PageTitle'>
+        <h1>ES6 let</h1>
+    </header>
+
+    <section>
+      <h1 id="let-声明的变量只在它所在的代码块有效。"><a href="#let-声明的变量只在它所在的代码块有效。" class="headerlink" title="let 声明的变量只在它所在的代码块有效。"></a>let 声明的变量只在它所在的代码块有效。</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  let a &#x3D; 10;</span><br><span class="line">  var b &#x3D; 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a &#x2F;&#x2F; 报错</span><br><span class="line">b &#x2F;&#x2F; 1</span><br></pre></td></tr></table></figure>
+<h1 id="let-不存在变量提升"><a href="#let-不存在变量提升" class="headerlink" title="let 不存在变量提升"></a>let 不存在变量提升</h1><p><strong>变量提升包含「创建、初始化和赋值」的过程。</strong></p>
+<p>下面回顾下变量声明和函数声明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function fn()&#123;</span><br><span class="line">  var x &#x3D; 1</span><br><span class="line">  var y &#x3D; 2</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line">&#x2F;&#x2F; fn()是一个作用域，不解释</span><br><span class="line">&#x2F;&#x2F; fn()里的 x 和 y 被「创建」</span><br><span class="line">&#x2F;&#x2F; x 和 y 被「初始化」为 undefined</span><br><span class="line">&#x2F;&#x2F; 他喵的开始执行了！</span><br><span class="line">&#x2F;&#x2F; x &#x3D; 1 将 x 变量「赋值」为 1</span><br><span class="line">&#x2F;&#x2F; y &#x3D; 2 将 y 变量「赋值」为 2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fn2()</span><br><span class="line"></span><br><span class="line">function fn2()&#123;</span><br><span class="line">  console.log(2)</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 找到所有用 function 声明的变量，在环境中「创建」这些变量。</span><br><span class="line">&#x2F;&#x2F; 将这些变量「初始化」并「赋值」为 function()&#123; console.log(2) &#125;。</span><br><span class="line">&#x2F;&#x2F; 他喵的开始执行了！</span><br></pre></td></tr></table></figure>
+<p>下面再来看看 Let 的声明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  let x &#x3D; 1</span><br><span class="line">  x &#x3D; 2</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 被 let 声明的 x, 在环境中「创建」</span><br><span class="line">&#x2F;&#x2F; 他喵的开始执行了！</span><br><span class="line">&#x2F;&#x2F; 执行 x &#x3D; 1，将 x 「初始化」为 1</span><br><span class="line">&#x2F;&#x2F; 执行 x &#x3D; 2，对 x 进行「赋值」</span><br></pre></td></tr></table></figure>
+<p>这就可以看出它们执行前的状态：</p>
+<ol>
+<li>let 的「创建」过程被提升了，但是初始化没有提升。</li>
+<li>var 的「创建」和「初始化」都被提升了。</li>
+<li>function 的「创建」「初始化」和「赋值」都被提升了。</li>
+</ol>
+<h1 id="暂时性死区"><a href="#暂时性死区" class="headerlink" title="暂时性死区"></a>暂时性死区</h1><p><strong>使用let声明变量时，只要变量在还没有声明完成前使用，就会报错。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">if (true) &#123;</span><br><span class="line">  &#x2F;&#x2F; TDZ开始</span><br><span class="line">  tmp &#x3D; &#39;abc&#39;; &#x2F;&#x2F; ReferenceError</span><br><span class="line">  console.log(tmp); &#x2F;&#x2F; ReferenceError</span><br><span class="line"></span><br><span class="line">  let tmp; &#x2F;&#x2F; TDZ结束</span><br><span class="line">  console.log(tmp); &#x2F;&#x2F; undefined</span><br><span class="line"></span><br><span class="line">  tmp &#x3D; 123;</span><br><span class="line">  console.log(tmp); &#x2F;&#x2F; 123</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="不允许重复声明"><a href="#不允许重复声明" class="headerlink" title="不允许重复声明"></a>不允许重复声明</h1><h4 id="for-循环谜题："><a href="#for-循环谜题：" class="headerlink" title="for 循环谜题："></a>for 循环谜题：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var liList &#x3D; document.querySelectorAll(&#39;li&#39;) &#x2F;&#x2F; 共5个li</span><br><span class="line">for( let i&#x3D;0; i&lt;liList.length; i++)&#123;</span><br><span class="line">  liList[i].onclick &#x3D; function()&#123;</span><br><span class="line">    console.log(i)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用 Babel 转 ES5语法后，你会发现其实上面的代码不是表面看上去的那样，而是经历了以下的过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#39;use strict&#39;;</span><br><span class="line"></span><br><span class="line">var liList &#x3D; document.querySelectorAll(&#39;li&#39;); &#x2F;&#x2F; 共5个li</span><br><span class="line"></span><br><span class="line">var _loop &#x3D; function _loop(i) &#123;</span><br><span class="line">  liList[i].onclick &#x3D; function () &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">for (var i &#x3D; 0; i &lt; liList.length; i++) &#123;</span><br><span class="line">  _loop(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ES6 之前我们通过自执行函数“造”一个块作用域，来解决问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var liList &#x3D;document.querySelectorAll(&#39;li&#39;) &#x2F;&#x2F; 共5个li</span><br><span class="line">for(var i &#x3D; 0; i &lt; liList.length; i++)&#123;</span><br><span class="line">  liList[i].onclick &#x3D; (function(i)&#123;</span><br><span class="line">    return function()&#123;</span><br><span class="line">      console.log(i)</span><br><span class="line">    &#125;    </span><br><span class="line">  &#125;)(i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; return 里面的 console.log 查找到作用域链上层那个 i 就停止了，也就是作为参数的那个 i</span><br></pre></td></tr></table></figure>
+
+
+      
+
+    </section>
+    
+      <section class='ArticleMeta'>
+          <div>
+            发布于&nbsp;
+            <time datetime="2019-12-19T06:17:11.000Z" itemprop="datePublished">
+              2019-12-19
+            </time>
+          </div>
+          
+      </section>
+    
+    
+</article>
+
+  
+</div>
+
+            <footer>
+    <div>© 2019 - John Doe </div>
+    <div>
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+        </span>
+        ,
+        <span>
+            Theme - <a href="https://github.com/nameoverflow/hexo-theme-icalm" target="_blank" rel="noopener">Icalm</a>
+        </span>
+    </div>
+</footer>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/pager/dist/singlepager.js"></script>
+
+<script>
+var sp = new Pager('data-pager-shell')
+
+</script>
+</body>
+</html>

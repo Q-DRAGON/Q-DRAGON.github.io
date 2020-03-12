@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ES6 新集合 | Hexo</title>
+  
+  
+  
+  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css"-->
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+<div class="Shell">
+    <aside class='SideBar'>
+    <section class='avatar' style="background-image: url()">
+        <div class='av-pic' style="background-image: url()">
+        </div>
+    </section>
+    <section class='menu'>
+        <div>Hexo</div>
+        
+        <ul>
+          
+            <a href="/" class="Btn">
+              <li>Home</li>
+            </a>  
+          
+            <a href="/archives/" class="Btn">
+              <li>Archive</li>
+            </a>  
+          
+        </ul>
+    </section>
+    <section class="media">
+        
+    </section>
+</aside>
+
+    <div class="container">
+        <div data-pager-shell>
+            <div>
+  <article class='ContentView'>
+    <header class='PageTitle'>
+        <h1>ES6 新集合</h1>
+    </header>
+
+    <section>
+      <h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>Set 是唯一项的集合，集合中每一项都是唯一的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 创建 Set</span><br><span class="line">const games &#x3D; new Set();</span><br><span class="line">&#x2F;&#x2F; 或</span><br><span class="line">const games &#x3D; new Set([&#39;Super Mario Bros.&#39;, &#39;Banjo-Kazooie&#39;, &#39;Mario Kart&#39;, &#39;Super Mario Bros.&#39;]);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 添加 (重复不会报错，但不添加)</span><br><span class="line">games.add(&#39;Banjo-Tooie&#39;);</span><br><span class="line">games.add(&#39;Age of Empires&#39;);</span><br><span class="line">&#x2F;&#x2F; 删除 (返回布尔值)</span><br><span class="line">games.delete(&#39;Super Mario Bros.&#39;);</span><br><span class="line">&#x2F;&#x2F; 清空集合</span><br><span class="line">games.clear()</span><br><span class="line">&#x2F;&#x2F; 使用 .size 属性可以返回 Set 中的条目数(像 length)：</span><br><span class="line">console.log(games.size);</span><br><span class="line">&#x2F;&#x2F; 检查是否存在</span><br><span class="line">console.log(games.has(&#39;September&#39;));</span><br><span class="line">&#x2F;&#x2F; 检索所有值</span><br><span class="line">console.log(months.values());</span><br><span class="line">&#x2F;&#x2F; 使用 SetIterator 迭代</span><br><span class="line">const iterator &#x3D; months.values();</span><br><span class="line">iterator.next();</span><br><span class="line">&#x2F;&#x2F; for...of 迭代</span><br><span class="line">const colors &#x3D; new Set([&#39;red&#39;, &#39;orange&#39;, &#39;yellow&#39;, &#39;green&#39;, &#39;blue&#39;, &#39;violet&#39;, &#39;brown&#39;, &#39;black&#39;]);</span><br><span class="line">for (const color of colors) &#123;</span><br><span class="line">  console.log(color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="WeakSet"><a href="#WeakSet" class="headerlink" title="WeakSet"></a>WeakSet</h3><p>和 Set 的区别：</p>
+<ul>
+<li>WeakSet 只能包含对象</li>
+<li>WeakSet 无法迭代，意味着不能循环访问其中的对象</li>
+<li>WeakSet 没有 .clear() 方法</li>
+<li>WeakSet中的对象都是弱引用，即垃圾回收机制不考虑WeakSet对该对象的引用，也就是说，如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存，不考虑该对象还存在于WeakSet之中。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const student1 &#x3D; &#123; name: &#39;James&#39;, age: 26, gender: &#39;male&#39; &#125;;</span><br><span class="line">const student2 &#x3D; &#123; name: &#39;Julia&#39;, age: 27, gender: &#39;female&#39; &#125;;</span><br><span class="line">const student3 &#x3D; &#123; name: &#39;Richard&#39;, age: 31, gender: &#39;male&#39; &#125;;</span><br><span class="line"></span><br><span class="line">const roster &#x3D; new WeakSet([student1, student2, student3]);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 添加对象以外的内容会报错</span><br></pre></td></tr></table></figure>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3>Map 像对象, Set 像数组</li>
+<li>但是 “键” 的范围不限于字符串，各种类型的值（包括对象）都可以当作键<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 创建(不能用值列表创建)</span><br><span class="line">const employees &#x3D; new Map();</span><br><span class="line">&#x2F;&#x2F; 添加</span><br><span class="line">employees.set(&#39;james.parkes@udacity.com&#39;, &#123;</span><br><span class="line">    firstName: &#39;James&#39;,</span><br><span class="line">    lastName: &#39;Parkes&#39;,</span><br><span class="line">    role: &#39;Content Developer&#39;</span><br><span class="line">&#125;);</span><br><span class="line">employees.set(&#39;julia@udacity.com&#39;, &#123;</span><br><span class="line">    firstName: &#39;Julia&#39;,</span><br><span class="line">    lastName: &#39;Van Cleve&#39;,</span><br><span class="line">    role: &#39;Content Developer&#39;</span><br><span class="line">&#125;);</span><br><span class="line">employees.set(&#39;richard@udacity.com&#39;, &#123;</span><br><span class="line">    firstName: &#39;Richard&#39;,</span><br><span class="line">    lastName: &#39;Kalehoff&#39;,</span><br><span class="line">    role: &#39;Content Developer&#39;</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F; 删除</span><br><span class="line">employees.delete(&#39;julia@udacity.com&#39;);</span><br><span class="line">&#x2F;&#x2F; 清空</span><br><span class="line">employees.clear()</span><br><span class="line">&#x2F;&#x2F; 检查</span><br><span class="line">console.log(employees.has(&#39;Xavier&#39;));</span><br><span class="line">&#x2F;&#x2F; 访问</span><br><span class="line">console.log(employees.get(&#39;Evelyn&#39;));</span><br></pre></td></tr></table></figure>
+在 Map 上使用 <code>.keys()</code> 和 <code>.values()</code> 方法将返回新的迭代器对象,叫做 <code>MapIterator</code>。你可以将该迭代器对象存储在新的变量中，并使用 <code>.next()</code> 循环访问每个键或值。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let iteratorObj &#x3D; members.keys();</span><br><span class="line">&#x2F;&#x2F; 或</span><br><span class="line">let iteratorObj &#x3D; members.values();</span><br><span class="line"></span><br><span class="line">iteratorObj.next();</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="WeakMap"><a href="#WeakMap" class="headerlink" title="WeakMap"></a>WeakMap</h3>和 WeakSet 差不多</li>
+<li>WeakMap 只能包含对象作为键，</li>
+<li>WeakMap 无法迭代，意味着无法循环访问，并且</li>
+<li>WeakMap 没有 .clear() 方法。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3>在es6中，能表示“集合”概念的数据类型大致有四种。<br>Array,Object,Map,Set<br>既然是集合，那遍历便是一种基本需求。而Iterator就是为了提供一种统一的接口机制。任何的数据结构，只要部署了Iterator接口，便可以使用类似的方式完成遍历操作。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 给对象部署 Iterator 接口</span><br><span class="line">const james &#x3D; &#123;</span><br><span class="line">    name: &#39;James&#39;,</span><br><span class="line">    height: &#96;5&#39;10&quot;&#96;,</span><br><span class="line">    weight: 185,</span><br><span class="line">    [Symbol.iterator]()&#123;</span><br><span class="line">        let properties &#x3D; Object.keys(this);</span><br><span class="line">        let index &#x3D; 0;</span><br><span class="line">        let contex &#x3D; this;</span><br><span class="line">        return &#123;</span><br><span class="line">          next() &#123;</span><br><span class="line">            return &#123;&quot;value&quot;:contex[properties[index]], &quot;key&quot;:properties[index], &quot;done&quot;:Boolean(index++ &gt;&#x3D; properties.length - 1) &#125;;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const iterator &#x3D; james[Symbol.iterator]();</span><br><span class="line"></span><br><span class="line">console.log(iterator.next().value); &#x2F;&#x2F; &#39;James&#39;</span><br><span class="line">console.log(iterator.next().value); &#x2F;&#x2F; &#96;5&#39;10&#96;</span><br><span class="line">console.log(iterator.next().value); &#x2F;&#x2F; 185</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+
+      
+
+    </section>
+    
+      <section class='ArticleMeta'>
+          <div>
+            发布于&nbsp;
+            <time datetime="2019-12-19T06:17:27.000Z" itemprop="datePublished">
+              2019-12-19
+            </time>
+          </div>
+          
+      </section>
+    
+    
+</article>
+
+  
+</div>
+
+            <footer>
+    <div>© 2019 - John Doe </div>
+    <div>
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+        </span>
+        ,
+        <span>
+            Theme - <a href="https://github.com/nameoverflow/hexo-theme-icalm" target="_blank" rel="noopener">Icalm</a>
+        </span>
+    </div>
+</footer>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/pager/dist/singlepager.js"></script>
+
+<script>
+var sp = new Pager('data-pager-shell')
+
+</script>
+</body>
+</html>

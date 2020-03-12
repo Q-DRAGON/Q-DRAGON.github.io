@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ES6 箭头函数 | Hexo</title>
+  
+  
+  
+  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css"-->
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+<div class="Shell">
+    <aside class='SideBar'>
+    <section class='avatar' style="background-image: url()">
+        <div class='av-pic' style="background-image: url()">
+        </div>
+    </section>
+    <section class='menu'>
+        <div>Hexo</div>
+        
+        <ul>
+          
+            <a href="/" class="Btn">
+              <li>Home</li>
+            </a>  
+          
+            <a href="/archives/" class="Btn">
+              <li>Archive</li>
+            </a>  
+          
+        </ul>
+    </section>
+    <section class="media">
+        
+    </section>
+</aside>
+
+    <div class="container">
+        <div data-pager-shell>
+            <div>
+  <article class='ContentView'>
+    <header class='PageTitle'>
+        <h1>ES6 箭头函数</h1>
+    </header>
+
+    <section>
+      <h4 id="箭头函数只有表达式："><a href="#箭头函数只有表达式：" class="headerlink" title="箭头函数只有表达式："></a>箭头函数只有表达式：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 一个参数 函数中只有一行代码，全一全裸</span><br><span class="line">const greet &#x3D; name &#x3D;&gt; &#96;Hello $&#123;name&#125;!&#96;;</span><br><span class="line">greet(&#39;Asser&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 多个参数 参数不裸</span><br><span class="line">const greet &#x3D; (name, age) &#x3D;&gt; &#96;Hello $&#123;name&#125;, I&#39;m $&#123;age&#125;!&#96;;</span><br><span class="line">greet(&#39;Asser&#39;, 25);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 多参数 多行代码 参数不裸，代码块不裸，需要 return</span><br><span class="line">const greet &#x3D; (name, age) &#x3D;&gt; &#123;</span><br><span class="line">     &#96;Hello $&#123;name&#125;, I&#39;m $&#123;age&#125;!&#96;</span><br><span class="line">     let result &#x3D; &#96;$&#123;name&#125;$&#123;age&#125;&#96;</span><br><span class="line">     return result</span><br><span class="line">&#125;</span><br><span class="line">greet(&#39;Asser&#39;, 25);</span><br></pre></td></tr></table></figure>
+
+<h4 id="箭头函数体内的-this-对象"><a href="#箭头函数体内的-this-对象" class="headerlink" title="箭头函数体内的 this 对象"></a>箭头函数体内的 this 对象</h4><p>箭头函数体内的 this 对象就是定义时所在的对象，而不是使用时所在的对象，箭头函数中没有自己的this的，而箭头函数会默认使用父级的this。</p>
+<h4 id="默认函数参数"><a href="#默认函数参数" class="headerlink" title="默认函数参数"></a>默认函数参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 以前这样写：</span><br><span class="line">function greet(name, greeting) &#123;</span><br><span class="line">  name &#x3D; (typeof name !&#x3D;&#x3D; &#39;undefined&#39;) ?  name : &#39;Student&#39;;</span><br><span class="line">  greeting &#x3D; (typeof greeting !&#x3D;&#x3D; &#39;undefined&#39;) ?  greeting : &#39;Welcome&#39;;</span><br><span class="line"></span><br><span class="line">  return &#96;$&#123;greeting&#125; $&#123;name&#125;!&#96;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ES6 这样写：</span><br><span class="line">function greet(name &#x3D; &#39;Student&#39;, greeting &#x3D; &#39;Welcome&#39;) &#123;</span><br><span class="line">  return &#96;$&#123;greeting&#125; $&#123;name&#125;!&#96;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet(); &#x2F;&#x2F; Welcome Student!</span><br><span class="line">greet(&#39;James&#39;); &#x2F;&#x2F; Welcome James!</span><br><span class="line">greet(&#39;Richard&#39;, &#39;Howdy&#39;); &#x2F;&#x2F; Howdy Richard!</span><br></pre></td></tr></table></figure>
+<h4 id="默认值和解构"><a href="#默认值和解构" class="headerlink" title="默认值和解构"></a>默认值和解构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 数组参数解构</span><br><span class="line">function createGrid([width &#x3D; 5, height &#x3D; 5]) &#123;</span><br><span class="line">  return &#96;Generates a $&#123;width&#125; x $&#123;height&#125; grid&#96;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">createGrid([]); &#x2F;&#x2F; Generates a 5 x 5 grid</span><br><span class="line">createGrid([2]); &#x2F;&#x2F; Generates a 2 x 5 grid</span><br><span class="line">createGrid([2, 3]); &#x2F;&#x2F; Generates a 2 x 3 grid</span><br><span class="line">createGrid([undefined, 3]); &#x2F;&#x2F; Generates a 5 x 3 grid</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 数组参数默认值 + 解构</span><br><span class="line">function createGrid([width &#x3D; 5, height &#x3D; 5] &#x3D; []) &#123;</span><br><span class="line">  return &#96;Generating a grid of $&#123;width&#125; by $&#123;height&#125;&#96;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 对象参数解构</span><br><span class="line">function createSundae(&#123;scoops &#x3D; 1, toppings &#x3D; [&#39;Hot Fudge&#39;]&#125;) &#123;</span><br><span class="line">  const scoopText &#x3D; scoops &#x3D;&#x3D;&#x3D; 1 ? &#39;scoop&#39; : &#39;scoops&#39;;</span><br><span class="line">  return &#96;Your sundae has $&#123;scoops&#125; $&#123;scoopText&#125; with $&#123;toppings.join(&#39; and &#39;)&#125; toppings.&#96;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">createSundae(&#123;&#125;); &#x2F;&#x2F; Your sundae has 1 scoop with Hot Fudge toppings.</span><br><span class="line">createSundae(&#123;scoops: 2&#125;); &#x2F;&#x2F; Your sundae has 2 scoops with Hot Fudge toppings.</span><br><span class="line">createSundae(&#123;scoops: 2, toppings: [&#39;Sprinkles&#39;]&#125;); &#x2F;&#x2F; Your sundae has 2 scoops with Sprinkles toppings.</span><br><span class="line">&#x2F;&#x2F; 使用 scoops 的默认值和 toppings 的指定参数</span><br><span class="line">createSundae(&#123;toppings: [&#39;Cookie Dough&#39;]&#125;); &#x2F;&#x2F; Your sundae has 1 scoop with Cookie Dough toppings.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 对象组参数默认值 + 解构</span><br><span class="line">function createSundae(&#123;scoops &#x3D; 1, toppings &#x3D; [&#39;Hot Fudge&#39;]&#125; &#x3D; &#123;&#125;) &#123;</span><br><span class="line">  const scoopText &#x3D; scoops &#x3D;&#x3D;&#x3D; 1 ? &#39;scoop&#39; : &#39;scoops&#39;;</span><br><span class="line">  return &#96;Your sundae has $&#123;scoops&#125; $&#123;scoopText&#125; with $&#123;toppings.join(&#39; and &#39;)&#125; toppings.&#96;;</span><br><span class="line">&#125;</span><br><span class="line">createSundae(); &#x2F;&#x2F; Your sundae has 1 scoop with Hot Fudge toppings.</span><br></pre></td></tr></table></figure>
+
+<h4 id="类"><a href="#类" class="headerlink" title="类"></a>类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 把原型和原型都放在类中：</span><br><span class="line">class Plane &#123;</span><br><span class="line">  constructor(numEngines) &#123;</span><br><span class="line">    this.numEngines &#x3D; numEngines;</span><br><span class="line">    this.enginesActive &#x3D; false;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  static badWeather(planes) &#123;</span><br><span class="line">    for (plane of planes) &#123;</span><br><span class="line">      plane.enginesActive &#x3D; false;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  startEngines() &#123;</span><br><span class="line">    console.log(&#39;starting engines…&#39;);</span><br><span class="line">    this.enginesActive &#x3D; true;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; static 是静态方法, 可以这样访问：</span><br><span class="line">Plane.badWeather([plane1, plane2, plane3]);</span><br></pre></td></tr></table></figure>
+
+
+      
+
+    </section>
+    
+      <section class='ArticleMeta'>
+          <div>
+            发布于&nbsp;
+            <time datetime="2019-12-19T06:17:41.000Z" itemprop="datePublished">
+              2019-12-19
+            </time>
+          </div>
+          
+      </section>
+    
+    
+</article>
+
+  
+</div>
+
+            <footer>
+    <div>© 2019 - John Doe </div>
+    <div>
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+        </span>
+        ,
+        <span>
+            Theme - <a href="https://github.com/nameoverflow/hexo-theme-icalm" target="_blank" rel="noopener">Icalm</a>
+        </span>
+    </div>
+</footer>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/pager/dist/singlepager.js"></script>
+
+<script>
+var sp = new Pager('data-pager-shell')
+
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ES6 常见语法 | Hexo</title>
+  
+  
+  
+  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css"-->
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+<div class="Shell">
+    <aside class='SideBar'>
+    <section class='avatar' style="background-image: url()">
+        <div class='av-pic' style="background-image: url()">
+        </div>
+    </section>
+    <section class='menu'>
+        <div>Hexo</div>
+        
+        <ul>
+          
+            <a href="/" class="Btn">
+              <li>Home</li>
+            </a>  
+          
+            <a href="/archives/" class="Btn">
+              <li>Archive</li>
+            </a>  
+          
+        </ul>
+    </section>
+    <section class="media">
+        
+    </section>
+</aside>
+
+    <div class="container">
+        <div data-pager-shell>
+            <div>
+  <article class='ContentView'>
+    <header class='PageTitle'>
+        <h1>ES6 常见语法</h1>
+    </header>
+
+    <section>
+      <h3 id="解构赋值："><a href="#解构赋值：" class="headerlink" title="解构赋值："></a>解构赋值：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 数组解构就是下标对应</span><br><span class="line">const point &#x3D; [10, 25, -34]</span><br><span class="line"></span><br><span class="line">const [x, y, z] &#x3D; point</span><br><span class="line"></span><br><span class="line">console.log(x, y, z) &#x2F;&#x2F; 10 25 -34</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 对象解构 变量必须与属性同名</span><br><span class="line">const gemstone &#x3D; &#123;</span><br><span class="line">  type: &#39;quartz&#39;,</span><br><span class="line">  color: &#39;rose&#39;,</span><br><span class="line">  karat: 21.29</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const &#123;type, color, karat&#125; &#x3D; gemstone</span><br><span class="line"></span><br><span class="line">console.log(type, color, karat) &#x2F;&#x2F; quartz rose 21.29</span><br></pre></td></tr></table></figure>
+<h3 id="对象字面量简写"><a href="#对象字面量简写" class="headerlink" title="对象字面量简写"></a>对象字面量简写</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 如果属性名称和所分配的变量名称一样，那么就可以从对象属性中删掉这些重复的变量名称。</span><br><span class="line"></span><br><span class="line">let type &#x3D; &#39;quartz&#39;</span><br><span class="line">let color &#x3D; &#39;rose&#39;</span><br><span class="line">let carat &#x3D; 21.29</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ES6 这样写：</span><br><span class="line">const gemstone &#x3D; &#123;type, color, carat&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 以前这样写：</span><br><span class="line">const gemstone &#x3D; &#123;</span><br><span class="line">  type: type,</span><br><span class="line">  color: color,</span><br><span class="line">  carat: carat</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ES6 对象里匿名函数可省略 function:</span><br><span class="line">const gemstone &#x3D; &#123;</span><br><span class="line">  type,</span><br><span class="line">  color,</span><br><span class="line">  carat,</span><br><span class="line">  calculateWorth() &#123; ... &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="for…of循环"><a href="#for…of循环" class="headerlink" title="for…of循环"></a>for…of循环</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const digits &#x3D; [0,1,2,3,4]</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; for..of 循环</span><br><span class="line">for(let digit of digits) &#123;</span><br><span class="line">    console.log(digit)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; for 循环</span><br><span class="line">for(let i &#x3D; 0; i &lt; digits.length; i++) &#123;</span><br><span class="line">    console.log(digits[i])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; for..in 循环</span><br><span class="line">for(let index in digits) &#123;</span><br><span class="line">    console.log(digits[index])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="展开运算符"><a href="#展开运算符" class="headerlink" title="展开运算符"></a>展开运算符</h3><p><strong>在变量中取出不定量的值</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const books &#x3D; [&quot;Don Quixote&quot;, &quot;The Hobbit&quot;, &quot;Alice in Wonderland&quot;, &quot;Tale of Two Cities&quot;]</span><br><span class="line"></span><br><span class="line">console.log(...books)</span><br><span class="line">&#x2F;&#x2F; Don Quixote The Hobbit Alice in Wonderland Tale of Two Cities</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const fruits &#x3D; [&quot;apples&quot;, &quot;bananas&quot;, &quot;pears&quot;];</span><br><span class="line">const vegetables &#x3D; [&quot;corn&quot;, &quot;potatoes&quot;, &quot;carrots&quot;];</span><br><span class="line"></span><br><span class="line">const produce &#x3D; [...fruits, ...vegetables];</span><br><span class="line"></span><br><span class="line">console.log(produce);</span><br><span class="line">&#x2F;&#x2F; [ &#39;apples&#39;, &#39;bananas&#39;, &#39;pears&#39;, &#39;corn&#39;, &#39;potatoes&#39;, &#39;carrots&#39; ]</span><br></pre></td></tr></table></figure>
+<h3 id="剩余参数"><a href="#剩余参数" class="headerlink" title="剩余参数"></a>剩余参数</h3><p><strong>不定量值塞入某一变量</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 数组解构赋值时用：</span><br><span class="line">const order &#x3D; [20.17, 18.67, 1.50, &quot;cheese&quot;, &quot;eggs&quot;, &quot;milk&quot;, &quot;bread&quot;];</span><br><span class="line">const [total, subtotal, tax, ...items] &#x3D; order;</span><br><span class="line"></span><br><span class="line">console.log(total, subtotal, tax, items); &#x2F;&#x2F; Prints: 20.17 18.67 1.5 [&quot;cheese&quot;, &quot;eggs&quot;, &quot;milk&quot;, &quot;bread&quot;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 作为不定量参数，作 auguments 用：</span><br><span class="line">function average(...nums) &#123;</span><br><span class="line">    for(let num of nums) &#123;</span><br><span class="line">        console.log(num)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 会 Log 出所有参数</span><br><span class="line"></span><br><span class="line">console.log(average(2, 6));</span><br><span class="line">console.log(average(2, 3, 3, 5, 7, 10));</span><br><span class="line">console.log(average(7, 1432, 12, 13, 100));</span><br><span class="line">console.log(average());</span><br></pre></td></tr></table></figure>
+
+
+      
+
+    </section>
+    
+      <section class='ArticleMeta'>
+          <div>
+            发布于&nbsp;
+            <time datetime="2019-12-19T06:17:58.000Z" itemprop="datePublished">
+              2019-12-19
+            </time>
+          </div>
+          
+      </section>
+    
+    
+</article>
+
+  
+</div>
+
+            <footer>
+    <div>© 2019 - John Doe </div>
+    <div>
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+        </span>
+        ,
+        <span>
+            Theme - <a href="https://github.com/nameoverflow/hexo-theme-icalm" target="_blank" rel="noopener">Icalm</a>
+        </span>
+    </div>
+</footer>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/pager/dist/singlepager.js"></script>
+
+<script>
+var sp = new Pager('data-pager-shell')
+
+</script>
+</body>
+</html>

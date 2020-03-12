@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ES6 元编程 | Hexo</title>
+  
+  
+  
+  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css"-->
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+<div class="Shell">
+    <aside class='SideBar'>
+    <section class='avatar' style="background-image: url()">
+        <div class='av-pic' style="background-image: url()">
+        </div>
+    </section>
+    <section class='menu'>
+        <div>Hexo</div>
+        
+        <ul>
+          
+            <a href="/" class="Btn">
+              <li>Home</li>
+            </a>  
+          
+            <a href="/archives/" class="Btn">
+              <li>Archive</li>
+            </a>  
+          
+        </ul>
+    </section>
+    <section class="media">
+        
+    </section>
+</aside>
+
+    <div class="container">
+        <div data-pager-shell>
+            <div>
+  <article class='ContentView'>
+    <header class='PageTitle'>
+        <h1>ES6 元编程</h1>
+    </header>
+
+    <section>
+      <h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><p>代理，代替另一个对象做事。</p>
+<h4 id="get-只访问"><a href="#get-只访问" class="headerlink" title="get 只访问"></a>get 只访问</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const richard &#x3D; &#123;status: &#39;looking for work&#39;&#125;;</span><br><span class="line">const handler &#x3D; &#123;</span><br><span class="line">    get(target, propName) &#123;</span><br><span class="line">        console.log(target);</span><br><span class="line">        &#x2F;&#x2F; &#123;status: &quot;looking for work&quot;&#125;</span><br><span class="line">        console.log(propName);</span><br><span class="line">        &#x2F;&#x2F; status</span><br><span class="line">        return target[propName];</span><br><span class="line">        &#x2F;&#x2F; &quot;looking for work&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">const agent &#x3D; new Proxy(richard, handler);</span><br><span class="line">agent.status;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; (1)target 是被访问的对象</span><br><span class="line">&#x2F;&#x2F; (2)propName 是被访问的属性</span><br></pre></td></tr></table></figure>
+<h4 id="set-可设置"><a href="#set-可设置" class="headerlink" title="set 可设置"></a>set 可设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const richard &#x3D; &#123;status: &#39;looking for work&#39;&#125;;</span><br><span class="line">const handler &#x3D; &#123;</span><br><span class="line">    set(target, propName, value) &#123;</span><br><span class="line">        if (propName &#x3D;&#x3D;&#x3D; &#39;payRate&#39;) &#123; &#x2F;&#x2F; 如果工资正在确定，则需要15%作为佣金。</span><br><span class="line">            value &#x3D; value * 0.85;</span><br><span class="line">        &#125;</span><br><span class="line">        target[propName] &#x3D; value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">const agent &#x3D; new Proxy(richard, handler);</span><br><span class="line">agent.payRate &#x3D; 1000; &#x2F;&#x2F; 将演员的工资设置为 1,000美元</span><br><span class="line">agent.payRate; &#x2F;&#x2F; 850美元是演员的实际工资</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; value 是被访问属性的值</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>除了 get 和 set, 还有很多的 trap</p>
+</blockquote>
+<h3 id="和-ES5-Getter-Setter-的区别"><a href="#和-ES5-Getter-Setter-的区别" class="headerlink" title="和 ES5 Getter/Setter 的区别"></a>和 ES5 Getter/Setter 的区别</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; ES 5 Getter&#x2F;Setter 代码：</span><br><span class="line">var obj &#x3D; &#123;</span><br><span class="line">    _age: 5,</span><br><span class="line">    _height: 4,</span><br><span class="line">    get age() &#123;</span><br><span class="line">        console.log(&#96;getting the &quot;age&quot; property&#96;);</span><br><span class="line">        console.log(this._age);</span><br><span class="line">    &#125;,</span><br><span class="line">    get height() &#123;</span><br><span class="line">        console.log(&#96;getting the &quot;height&quot; property&#96;);</span><br><span class="line">        console.log(this._height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">obj.age; &#x2F;&#x2F; 打印 &#39;getting the &quot;age&quot; property&#39; 和 5</span><br><span class="line">obj.height; &#x2F;&#x2F; 打印 &#39;getting the &quot;height&quot; property&#39; 和 4</span><br><span class="line">obj.weight &#x3D; 120; &#x2F;&#x2F; 在对象上设置一个新的属性</span><br><span class="line">obj.weight; &#x2F;&#x2F; 只打印120</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ES 6 Proxy 代码：</span><br><span class="line">const proxyObj &#x3D; new Proxy(&#123;age: 5, height: 4&#125;, &#123;</span><br><span class="line">    get(targetObj, _property) &#123;</span><br><span class="line">        console.log(&#96;getting the $&#123;_property&#125; property&#96;);</span><br><span class="line">        console.log(targetObj[_property]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">proxyObj.age; &#x2F;&#x2F; 打印 &#39;getting the age property&#39; 和 5</span><br><span class="line">proxyObj.height; &#x2F;&#x2F; 打印 &#39;getting the height property&#39; 和 4</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 不一样的地方:</span><br><span class="line">proxyObj.weight &#x3D; 120; &#x2F;&#x2F; 在对象上设置一个新的属性</span><br><span class="line">proxyObj.weight; &#x2F;&#x2F; 打印 &#39;getting the weight property&#39; 和 120</span><br></pre></td></tr></table></figure>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><ul>
+<li>使用 new Proxy() 构造函数</li>
+<li>将被代理的对象传入为第一项</li>
+<li>第二个对象是 handler（处理器）对象</li>
+<li>handler 对象由 13 种不同的 trap 之一构成</li>
+<li>trap 是一种函数，将截获对属性的调用，让你运行代码，如果未定义trap，默认行为会被发送给目标对象<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 未定义 trap</span><br><span class="line">var richard &#x3D; &#123;status: &#39;looking for work&#39;&#125;;</span><br><span class="line">var agent &#x3D; new Proxy(richard, &#123;&#125;);</span><br><span class="line"></span><br><span class="line">agent.status; &#x2F;&#x2F; 返回 &#39;looking for work&#39;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+
+      
+
+    </section>
+    
+      <section class='ArticleMeta'>
+          <div>
+            发布于&nbsp;
+            <time datetime="2019-12-19T06:17:34.000Z" itemprop="datePublished">
+              2019-12-19
+            </time>
+          </div>
+          
+      </section>
+    
+    
+</article>
+
+  
+</div>
+
+            <footer>
+    <div>© 2019 - John Doe </div>
+    <div>
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+        </span>
+        ,
+        <span>
+            Theme - <a href="https://github.com/nameoverflow/hexo-theme-icalm" target="_blank" rel="noopener">Icalm</a>
+        </span>
+    </div>
+</footer>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/pager/dist/singlepager.js"></script>
+
+<script>
+var sp = new Pager('data-pager-shell')
+
+</script>
+</body>
+</html>

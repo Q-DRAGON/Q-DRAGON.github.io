@@ -54,12 +54,12 @@
     <header class="title">
       
         <h1>
-          <a href="/2019/12/04/hello-world/">Hello World</a>
+          <a href="/2019/12/19/vue/">vue</a>
         </h1>
       
       <div class='ListMeta'>
-  <time datetime="2019-12-04T08:15:03.508Z" itemprop="datePublished">
-    2019-12-04
+  <time datetime="2019-12-19T07:04:31.000Z" itemprop="datePublished">
+    2019-12-19
   </time>
   
   
@@ -68,19 +68,38 @@
     </header>
     <div>
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+</article>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/19/vue-x%20%E6%BA%90%E7%A0%81%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF/">vue-x 源码实现思路</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-19T07:04:28.000Z" itemprop="datePublished">
+    2019-12-19
+  </time>
+  
+  
+</div>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+    </header>
+    <div>
+      
+        <p>Vue.use(Vue.x)会调用 const install，别问为什么，只要记住这是vue.js 封装好的，我们是在 vue.js 框架的基础上实现了 vue.x</p>
+<p>在创建(beforeCreate)前，把Vue 类的 options 赋值给 store 的 options，这样你就可以this.store 这样调用了。<br>(options 是你new Vue 传进去的形参，详见Vue.js 源码实现)<br><img src="images/vue-x/1.jpg"></p>
+<p>State<br> 没什么讲究，直接赋值<br> <img src="images/vue-x/2.jpg"></p>
+<p>Getters<br>Getters 用 object.defineProproty 是因为要定义你写的 getters 里面函数中，return 时应该返回的值。<br><img src="images/vue-x/3.jpg"><br><img src="images/vue-x/4.jpg"></p>
+<p>mutations<br>与 getters 不同， mutations 有个 commit，不过本质上都是遍历，然后执行。<br><img src="images/vue-x/5.jpg"><br><img src="images/vue-x/6.jpg"><br><img src="images/vue-x/7.jpg"></p>
+<p>actions<br>实现方式和 mutations 相似，没什么可说的。<br><img src="images/vue-x/8.jpg"></p>
 
       
     </div>
@@ -88,7 +107,384 @@
 
     </li>
   
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/19/vue-router%20%E6%BA%90%E7%A0%81%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF/">vue-router 源码实现思路</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-19T06:45:27.000Z" itemprop="datePublished">
+    2019-12-19
+  </time>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <h1 id="vue-router-主要实现四个东西"><a href="#vue-router-主要实现四个东西" class="headerlink" title="vue-router 主要实现四个东西:"></a>vue-router 主要实现四个东西:</h1><ol>
+<li>router-link(超链接)</li>
+<li>router-view(点击超链接后要展示的视图)</li>
+<li>this.$router(vue api)</li>
+<li>this.$route(vue api)</li>
+</ol>
+<h2 id="History-and-Hash"><a href="#History-and-Hash" class="headerlink" title="History and Hash:"></a>History and Hash:</h2><p>单页路由是用原生的 BOM api 实现的，这里先来理解原生 BOM 的 hash 和 history。</p>
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash:"></a>Hash:</h3><p>这里面的 DOM 就是用 hash 的字符串显示，故取 hash 插入<br><img src="images/vue-router源码/1.jpg"></p>
+<h3 id="History"><a href="#History" class="headerlink" title="History:"></a>History:</h3><img src="images/vue-router源码/2.jpg">
+<img src="images/vue-router源码/3.jpg">
+
+
+
+
+
+<h2 id="当你-new-Vue-router-时，你会创建一个实例。vue-use-会调用-install-方法"><a href="#当你-new-Vue-router-时，你会创建一个实例。vue-use-会调用-install-方法" class="headerlink" title="当你 new Vue router 时，你会创建一个实例。vue.use 会调用 install 方法"></a>当你 new Vue router 时，你会创建一个实例。vue.use 会调用 install 方法</h2><img src="images/vue-router源码/4.jpg">
+
+
+
+<h2 id="vueRouter类里有这些东西："><a href="#vueRouter类里有这些东西：" class="headerlink" title="vueRouter类里有这些东西："></a>vueRouter类里有这些东西：</h2><ol>
+<li>createMap 把你传进去的 routes 数组 变成  {‘/home’: Home…} 这种 object 的结构，这样可以方便 VueRouter 类封装一些操作。<img src="images/vue-router源码/5.jpg">
+<img src="images/vue-router源码/6.jpg">
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li>init() 初始化，用条件语句判断你时 hash 还是 history，如果时 hash, 然后把 hash 存进 current.方便封装操作。<img src="images/vue-router源码/7.jpg">
+
+
+</li>
+</ol>
+<p>VueRouter 类还有些其他东西，省略。</p>
+<h2 id="this-router-和-this-route-的实现："><a href="#this-router-和-this-route-的实现：" class="headerlink" title="this.$router 和 this.$route 的实现："></a>this.$router 和 this.$route 的实现：</h2><h3 id="this-router-的实现"><a href="#this-router-的实现" class="headerlink" title="this.router 的实现:"></a>this.router 的实现:</h3><p>先通过 this$options 拿到根组件，因为有 this.$options 的一定是根组件，是根组件就直接赋值给 _root，不是根组件，那么就是子组件，子组件的话，拿到子组件的父亲，自然就是根组件, 再赋值给_root</p>
+<p>当你调用 this.$router 时会调用 get() 里的 ruturn this._root._router<br><img src="images/vue-router源码/8.jpg"></p>
+<h3 id="this-route-的实现："><a href="#this-route-的实现：" class="headerlink" title="this.route 的实现："></a>this.route 的实现：</h3><p>当你调用 this.$route 时会调用 get() 里的 ruturn { this._root._router.history.current }<br><img src="images/vue-router源码/9.jpg"></p>
+<h2 id="router-link-和-router-view-的实现："><a href="#router-link-和-router-view-的实现：" class="headerlink" title="router-link 和 router-view 的实现："></a>router-link 和 router-view 的实现：</h2><p>绑定全局组件做渲染<br><img src="images/vue-router源码/10.jpg"></p>
+<h3 id="router-link-的实现："><a href="#router-link-的实现：" class="headerlink" title="router-link 的实现："></a>router-link 的实现：</h3><p>利用类似 ES6 模板字符串的方式，插入一个标签。<br><img src="images/vue-router源码/11.jpg"></p>
+<h3 id="router-view-的实现"><a href="#router-view-的实现" class="headerlink" title="router-view 的实现:"></a>router-view 的实现:</h3><p>找到当前的 history，然后找到routeMap object 里对应的组件，然后做渲染。<br><img src="images/vue-router源码/12.jpg"></p>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/19/ES6%20%E8%BF%AD%E4%BB%A3%E5%99%A8%20%E7%94%9F%E6%88%90%E5%99%A8/">ES6 迭代器 生成器</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-19T06:20:28.000Z" itemprop="datePublished">
+    2019-12-19
+  </time>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <p>迭代器是一个对象。<br>生成器是用来返回迭代器的函数。</p>
+<blockquote>
+<p>ES6 封装了一个生成器用来创建迭代器</p>
+</blockquote>
+<p>迭代器这个对象有 next() 方法返回结果对象，这个结果对象有下一个返回值 value、迭代完成布尔值 done，下面是一个 ES5 创建的迭代器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 这是创建迭代器的函数，return 里才是迭代器</span><br><span class="line">&#x2F;&#x2F; 返回的是 return &#123; value: value, done: done&#125;</span><br><span class="line">&#x2F;&#x2F; 那么这个 value 和 done 该显示什么样的遍历结果呢？</span><br><span class="line">&#x2F;&#x2F; done 是布尔判断 i &gt;&#x3D; items.length</span><br><span class="line">&#x2F;&#x2F; value 是当 done 为 True,就显示 undefined, 否则就打印 value</span><br><span class="line"></span><br><span class="line">function createIterator(items) &#123;</span><br><span class="line">  var i &#x3D; 0;</span><br><span class="line">  return &#123; &#x2F;&#x2F; 返回一个迭代器对象</span><br><span class="line">    next: function() &#123; &#x2F;&#x2F; 迭代器对象一定有个next()方法</span><br><span class="line">      var done &#x3D; (i &gt;&#x3D; items.length);</span><br><span class="line">      var value &#x3D; !done ? items[i++] : undefined;</span><br><span class="line">      return &#123; &#x2F;&#x2F; next()方法返回结果对象</span><br><span class="line">        value: value,</span><br><span class="line">        done: done</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var iterator &#x3D; createIterator([1, 2, 3]);</span><br><span class="line"></span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 1, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 2, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 3, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: undefiend, done: true&#125;&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 之后所有的调用都会返回相同内容</span><br><span class="line"></span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: undefiend, done: true&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>下面是生成器的例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 函数生成器加 * 是生成器的套路</span><br><span class="line">&#x2F;*</span><br><span class="line">*createIterator 生成器函数内部，做了什么呢？</span><br><span class="line">for 循环不断从数组中生成新的元素放入迭代器中，</span><br><span class="line">每遇到一个yield语句循环都会停止</span><br><span class="line">每次调用迭代器的next()方法，循环便继续运行并停止在下一条 yield 语句处。</span><br><span class="line">*&#x2F;</span><br><span class="line"></span><br><span class="line">function *createIterator(items) &#123;</span><br><span class="line">  for(let i&#x3D;0; i &lt; items.length; i++) &#123;</span><br><span class="line">    yield items[i];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let iterator &#x3D; createIterator([1, 2, 3]);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 既然生成器返回的是迭代器，自然就可以调用迭代器的next()方法</span><br><span class="line"></span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 1, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 2, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: 3, done: false&#125;&quot;</span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: undefiend, done: true&#125;&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 之后所有的调用都会返回相同内容</span><br><span class="line"></span><br><span class="line">console.log(iterator.next()); &#x2F;&#x2F; &quot;&#123; value: undefiend, done: true&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>yield:</p>
+<p>切菜，切到一半去上厕所，上完厕所回来你不可能重头切，你是从刚才切的地方继续，刚才切的地方就是 yield</p>
+<p><strong>ES 6 里所有的集合对象（Set，Map, 数组) 和字符串都是可迭代的对象，它们都各自绑定了默认的迭代器。</strong></p>
+<h2 id="总结以下："><a href="#总结以下：" class="headerlink" title="总结以下："></a>总结以下：</h2><ol>
+<li><p>ES 6 有集合对象(Set,Map,数组)，有字符串。</p>
+</li>
+<li><p>ES 6 里有三种默认迭代器： entries(),values(),keys()</p>
+</li>
+<li><p>ES 6 里 所有集合对象 和 字符串 都是可迭代对象，它们都绑定了默认的 迭代器 和 Symbol.iterator 属性。猜猜就知道，数组和Set集合的默认迭代器是 values()，Map 集合的默认迭代器是 entries()</p>
+</li>
+</ol>
+<blockquote>
+<p>entries() 返回一个迭代器，其值为多个键值对。如果是数组，第一个元素是索引位置；如果是Set集合，第一个元素与第二个元素一样，都是值。<br>values() 返回一个迭代器，其值为集合的值。<br>keys() 返回一个迭代器，其值为集合中的所有键名。如果是数组，返回的是索引；如果是Set集合，返回的是值（Set的值被同时用作键和值）</p>
+</blockquote>
+<ol start="4">
+<li><p>你可以返回这些迭代器，也就是操作这些可迭代对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 操作方法之一 解构</span><br><span class="line">for(let [key, value] of data) &#123;</span><br><span class="line">  console.log(key + &quot;&#x3D;&quot; + value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 操纵方法之二 展开运算符</span><br><span class="line">let set &#x3D; new Set([1, 2, 3, 4, 5]),</span><br><span class="line"></span><br><span class="line">  array &#x3D; [...set];</span><br><span class="line"></span><br><span class="line">console.log(array); &#x2F;&#x2F; [1,2,3,4,5]</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 操作方法之三 生成器，上面写过了，这里省略。</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 操纵方法之四 for...of 循环(单纯的 for of 循环)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>你可以自定义迭代器，猜猜就知道，那就是改写 Symbol.iterator 属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 在这里，我们把 items 这个对象，挂上 Symbol.iterator 属性，绑定了迭代器。</span><br><span class="line">let collection &#x3D; &#123;</span><br><span class="line"> items: [11,22,33],</span><br><span class="line"> *[Symbol.iterator]() &#123;</span><br><span class="line">  for (let item of this.items)&#123;</span><br><span class="line">   yield item</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(isIterator(collection)) &#x2F;&#x2F; true</span><br><span class="line">for (let item of collection)&#123;</span><br><span class="line"> console.log(item) &#x2F;&#x2F; 11 22 33</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>参考网站：<br><a href="https://www.jianshu.com/p/ec95c30f0e25" target="_blank" rel="noopener">https://www.jianshu.com/p/ec95c30f0e25</a></p>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/19/ES6%20%E5%B8%B8%E8%A7%81%E8%AF%AD%E6%B3%95/">ES6 常见语法</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-19T06:17:58.000Z" itemprop="datePublished">
+    2019-12-19
+  </time>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <h3 id="解构赋值："><a href="#解构赋值：" class="headerlink" title="解构赋值："></a>解构赋值：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 数组解构就是下标对应</span><br><span class="line">const point &#x3D; [10, 25, -34]</span><br><span class="line"></span><br><span class="line">const [x, y, z] &#x3D; point</span><br><span class="line"></span><br><span class="line">console.log(x, y, z) &#x2F;&#x2F; 10 25 -34</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 对象解构 变量必须与属性同名</span><br><span class="line">const gemstone &#x3D; &#123;</span><br><span class="line">  type: &#39;quartz&#39;,</span><br><span class="line">  color: &#39;rose&#39;,</span><br><span class="line">  karat: 21.29</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const &#123;type, color, karat&#125; &#x3D; gemstone</span><br><span class="line"></span><br><span class="line">console.log(type, color, karat) &#x2F;&#x2F; quartz rose 21.29</span><br></pre></td></tr></table></figure>
+<h3 id="对象字面量简写"><a href="#对象字面量简写" class="headerlink" title="对象字面量简写"></a>对象字面量简写</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 如果属性名称和所分配的变量名称一样，那么就可以从对象属性中删掉这些重复的变量名称。</span><br><span class="line"></span><br><span class="line">let type &#x3D; &#39;quartz&#39;</span><br><span class="line">let color &#x3D; &#39;rose&#39;</span><br><span class="line">let carat &#x3D; 21.29</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ES6 这样写：</span><br><span class="line">const gemstone &#x3D; &#123;type, color, carat&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 以前这样写：</span><br><span class="line">const gemstone &#x3D; &#123;</span><br><span class="line">  type: type,</span><br><span class="line">  color: color,</span><br><span class="line">  carat: carat</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ES6 对象里匿名函数可省略 function:</span><br><span class="line">const gemstone &#x3D; &#123;</span><br><span class="line">  type,</span><br><span class="line">  color,</span><br><span class="line">  carat,</span><br><span class="line">  calculateWorth() &#123; ... &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="for…of循环"><a href="#for…of循环" class="headerlink" title="for…of循环"></a>for…of循环</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const digits &#x3D; [0,1,2,3,4]</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; for..of 循环</span><br><span class="line">for(let digit of digits) &#123;</span><br><span class="line">    console.log(digit)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; for 循环</span><br><span class="line">for(let i &#x3D; 0; i &lt; digits.length; i++) &#123;</span><br><span class="line">    console.log(digits[i])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; for..in 循环</span><br><span class="line">for(let index in digits) &#123;</span><br><span class="line">    console.log(digits[index])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="展开运算符"><a href="#展开运算符" class="headerlink" title="展开运算符"></a>展开运算符</h3><p><strong>在变量中取出不定量的值</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const books &#x3D; [&quot;Don Quixote&quot;, &quot;The Hobbit&quot;, &quot;Alice in Wonderland&quot;, &quot;Tale of Two Cities&quot;]</span><br><span class="line"></span><br><span class="line">console.log(...books)</span><br><span class="line">&#x2F;&#x2F; Don Quixote The Hobbit Alice in Wonderland Tale of Two Cities</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const fruits &#x3D; [&quot;apples&quot;, &quot;bananas&quot;, &quot;pears&quot;];</span><br><span class="line">const vegetables &#x3D; [&quot;corn&quot;, &quot;potatoes&quot;, &quot;carrots&quot;];</span><br><span class="line"></span><br><span class="line">const produce &#x3D; [...fruits, ...vegetables];</span><br><span class="line"></span><br><span class="line">console.log(produce);</span><br><span class="line">&#x2F;&#x2F; [ &#39;apples&#39;, &#39;bananas&#39;, &#39;pears&#39;, &#39;corn&#39;, &#39;potatoes&#39;, &#39;carrots&#39; ]</span><br></pre></td></tr></table></figure>
+<h3 id="剩余参数"><a href="#剩余参数" class="headerlink" title="剩余参数"></a>剩余参数</h3><p><strong>不定量值塞入某一变量</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 数组解构赋值时用：</span><br><span class="line">const order &#x3D; [20.17, 18.67, 1.50, &quot;cheese&quot;, &quot;eggs&quot;, &quot;milk&quot;, &quot;bread&quot;];</span><br><span class="line">const [total, subtotal, tax, ...items] &#x3D; order;</span><br><span class="line"></span><br><span class="line">console.log(total, subtotal, tax, items); &#x2F;&#x2F; Prints: 20.17 18.67 1.5 [&quot;cheese&quot;, &quot;eggs&quot;, &quot;milk&quot;, &quot;bread&quot;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 作为不定量参数，作 auguments 用：</span><br><span class="line">function average(...nums) &#123;</span><br><span class="line">    for(let num of nums) &#123;</span><br><span class="line">        console.log(num)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 会 Log 出所有参数</span><br><span class="line"></span><br><span class="line">console.log(average(2, 6));</span><br><span class="line">console.log(average(2, 3, 3, 5, 7, 10));</span><br><span class="line">console.log(average(7, 1432, 12, 13, 100));</span><br><span class="line">console.log(average());</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/19/ES6%20%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0/">ES6 箭头函数</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-19T06:17:41.000Z" itemprop="datePublished">
+    2019-12-19
+  </time>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <h4 id="箭头函数只有表达式："><a href="#箭头函数只有表达式：" class="headerlink" title="箭头函数只有表达式："></a>箭头函数只有表达式：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 一个参数 函数中只有一行代码，全一全裸</span><br><span class="line">const greet &#x3D; name &#x3D;&gt; &#96;Hello $&#123;name&#125;!&#96;;</span><br><span class="line">greet(&#39;Asser&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 多个参数 参数不裸</span><br><span class="line">const greet &#x3D; (name, age) &#x3D;&gt; &#96;Hello $&#123;name&#125;, I&#39;m $&#123;age&#125;!&#96;;</span><br><span class="line">greet(&#39;Asser&#39;, 25);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 多参数 多行代码 参数不裸，代码块不裸，需要 return</span><br><span class="line">const greet &#x3D; (name, age) &#x3D;&gt; &#123;</span><br><span class="line">     &#96;Hello $&#123;name&#125;, I&#39;m $&#123;age&#125;!&#96;</span><br><span class="line">     let result &#x3D; &#96;$&#123;name&#125;$&#123;age&#125;&#96;</span><br><span class="line">     return result</span><br><span class="line">&#125;</span><br><span class="line">greet(&#39;Asser&#39;, 25);</span><br></pre></td></tr></table></figure>
+
+<h4 id="箭头函数体内的-this-对象"><a href="#箭头函数体内的-this-对象" class="headerlink" title="箭头函数体内的 this 对象"></a>箭头函数体内的 this 对象</h4><p>箭头函数体内的 this 对象就是定义时所在的对象，而不是使用时所在的对象，箭头函数中没有自己的this的，而箭头函数会默认使用父级的this。</p>
+<h4 id="默认函数参数"><a href="#默认函数参数" class="headerlink" title="默认函数参数"></a>默认函数参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 以前这样写：</span><br><span class="line">function greet(name, greeting) &#123;</span><br><span class="line">  name &#x3D; (typeof name !&#x3D;&#x3D; &#39;undefined&#39;) ?  name : &#39;Student&#39;;</span><br><span class="line">  greeting &#x3D; (typeof greeting !&#x3D;&#x3D; &#39;undefined&#39;) ?  greeting : &#39;Welcome&#39;;</span><br><span class="line"></span><br><span class="line">  return &#96;$&#123;greeting&#125; $&#123;name&#125;!&#96;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ES6 这样写：</span><br><span class="line">function greet(name &#x3D; &#39;Student&#39;, greeting &#x3D; &#39;Welcome&#39;) &#123;</span><br><span class="line">  return &#96;$&#123;greeting&#125; $&#123;name&#125;!&#96;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet(); &#x2F;&#x2F; Welcome Student!</span><br><span class="line">greet(&#39;James&#39;); &#x2F;&#x2F; Welcome James!</span><br><span class="line">greet(&#39;Richard&#39;, &#39;Howdy&#39;); &#x2F;&#x2F; Howdy Richard!</span><br></pre></td></tr></table></figure>
+<h4 id="默认值和解构"><a href="#默认值和解构" class="headerlink" title="默认值和解构"></a>默认值和解构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 数组参数解构</span><br><span class="line">function createGrid([width &#x3D; 5, height &#x3D; 5]) &#123;</span><br><span class="line">  return &#96;Generates a $&#123;width&#125; x $&#123;height&#125; grid&#96;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">createGrid([]); &#x2F;&#x2F; Generates a 5 x 5 grid</span><br><span class="line">createGrid([2]); &#x2F;&#x2F; Generates a 2 x 5 grid</span><br><span class="line">createGrid([2, 3]); &#x2F;&#x2F; Generates a 2 x 3 grid</span><br><span class="line">createGrid([undefined, 3]); &#x2F;&#x2F; Generates a 5 x 3 grid</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 数组参数默认值 + 解构</span><br><span class="line">function createGrid([width &#x3D; 5, height &#x3D; 5] &#x3D; []) &#123;</span><br><span class="line">  return &#96;Generating a grid of $&#123;width&#125; by $&#123;height&#125;&#96;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 对象参数解构</span><br><span class="line">function createSundae(&#123;scoops &#x3D; 1, toppings &#x3D; [&#39;Hot Fudge&#39;]&#125;) &#123;</span><br><span class="line">  const scoopText &#x3D; scoops &#x3D;&#x3D;&#x3D; 1 ? &#39;scoop&#39; : &#39;scoops&#39;;</span><br><span class="line">  return &#96;Your sundae has $&#123;scoops&#125; $&#123;scoopText&#125; with $&#123;toppings.join(&#39; and &#39;)&#125; toppings.&#96;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">createSundae(&#123;&#125;); &#x2F;&#x2F; Your sundae has 1 scoop with Hot Fudge toppings.</span><br><span class="line">createSundae(&#123;scoops: 2&#125;); &#x2F;&#x2F; Your sundae has 2 scoops with Hot Fudge toppings.</span><br><span class="line">createSundae(&#123;scoops: 2, toppings: [&#39;Sprinkles&#39;]&#125;); &#x2F;&#x2F; Your sundae has 2 scoops with Sprinkles toppings.</span><br><span class="line">&#x2F;&#x2F; 使用 scoops 的默认值和 toppings 的指定参数</span><br><span class="line">createSundae(&#123;toppings: [&#39;Cookie Dough&#39;]&#125;); &#x2F;&#x2F; Your sundae has 1 scoop with Cookie Dough toppings.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 对象组参数默认值 + 解构</span><br><span class="line">function createSundae(&#123;scoops &#x3D; 1, toppings &#x3D; [&#39;Hot Fudge&#39;]&#125; &#x3D; &#123;&#125;) &#123;</span><br><span class="line">  const scoopText &#x3D; scoops &#x3D;&#x3D;&#x3D; 1 ? &#39;scoop&#39; : &#39;scoops&#39;;</span><br><span class="line">  return &#96;Your sundae has $&#123;scoops&#125; $&#123;scoopText&#125; with $&#123;toppings.join(&#39; and &#39;)&#125; toppings.&#96;;</span><br><span class="line">&#125;</span><br><span class="line">createSundae(); &#x2F;&#x2F; Your sundae has 1 scoop with Hot Fudge toppings.</span><br></pre></td></tr></table></figure>
+
+<h4 id="类"><a href="#类" class="headerlink" title="类"></a>类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 把原型和原型都放在类中：</span><br><span class="line">class Plane &#123;</span><br><span class="line">  constructor(numEngines) &#123;</span><br><span class="line">    this.numEngines &#x3D; numEngines;</span><br><span class="line">    this.enginesActive &#x3D; false;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  static badWeather(planes) &#123;</span><br><span class="line">    for (plane of planes) &#123;</span><br><span class="line">      plane.enginesActive &#x3D; false;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  startEngines() &#123;</span><br><span class="line">    console.log(&#39;starting engines…&#39;);</span><br><span class="line">    this.enginesActive &#x3D; true;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; static 是静态方法, 可以这样访问：</span><br><span class="line">Plane.badWeather([plane1, plane2, plane3]);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/19/ES6%20%E5%85%83%E7%BC%96%E7%A8%8B/">ES6 元编程</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-19T06:17:34.000Z" itemprop="datePublished">
+    2019-12-19
+  </time>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><p>代理，代替另一个对象做事。</p>
+<h4 id="get-只访问"><a href="#get-只访问" class="headerlink" title="get 只访问"></a>get 只访问</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const richard &#x3D; &#123;status: &#39;looking for work&#39;&#125;;</span><br><span class="line">const handler &#x3D; &#123;</span><br><span class="line">    get(target, propName) &#123;</span><br><span class="line">        console.log(target);</span><br><span class="line">        &#x2F;&#x2F; &#123;status: &quot;looking for work&quot;&#125;</span><br><span class="line">        console.log(propName);</span><br><span class="line">        &#x2F;&#x2F; status</span><br><span class="line">        return target[propName];</span><br><span class="line">        &#x2F;&#x2F; &quot;looking for work&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">const agent &#x3D; new Proxy(richard, handler);</span><br><span class="line">agent.status;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; (1)target 是被访问的对象</span><br><span class="line">&#x2F;&#x2F; (2)propName 是被访问的属性</span><br></pre></td></tr></table></figure>
+<h4 id="set-可设置"><a href="#set-可设置" class="headerlink" title="set 可设置"></a>set 可设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const richard &#x3D; &#123;status: &#39;looking for work&#39;&#125;;</span><br><span class="line">const handler &#x3D; &#123;</span><br><span class="line">    set(target, propName, value) &#123;</span><br><span class="line">        if (propName &#x3D;&#x3D;&#x3D; &#39;payRate&#39;) &#123; &#x2F;&#x2F; 如果工资正在确定，则需要15%作为佣金。</span><br><span class="line">            value &#x3D; value * 0.85;</span><br><span class="line">        &#125;</span><br><span class="line">        target[propName] &#x3D; value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">const agent &#x3D; new Proxy(richard, handler);</span><br><span class="line">agent.payRate &#x3D; 1000; &#x2F;&#x2F; 将演员的工资设置为 1,000美元</span><br><span class="line">agent.payRate; &#x2F;&#x2F; 850美元是演员的实际工资</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; value 是被访问属性的值</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>除了 get 和 set, 还有很多的 trap</p>
+</blockquote>
+<h3 id="和-ES5-Getter-Setter-的区别"><a href="#和-ES5-Getter-Setter-的区别" class="headerlink" title="和 ES5 Getter/Setter 的区别"></a>和 ES5 Getter/Setter 的区别</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; ES 5 Getter&#x2F;Setter 代码：</span><br><span class="line">var obj &#x3D; &#123;</span><br><span class="line">    _age: 5,</span><br><span class="line">    _height: 4,</span><br><span class="line">    get age() &#123;</span><br><span class="line">        console.log(&#96;getting the &quot;age&quot; property&#96;);</span><br><span class="line">        console.log(this._age);</span><br><span class="line">    &#125;,</span><br><span class="line">    get height() &#123;</span><br><span class="line">        console.log(&#96;getting the &quot;height&quot; property&#96;);</span><br><span class="line">        console.log(this._height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">obj.age; &#x2F;&#x2F; 打印 &#39;getting the &quot;age&quot; property&#39; 和 5</span><br><span class="line">obj.height; &#x2F;&#x2F; 打印 &#39;getting the &quot;height&quot; property&#39; 和 4</span><br><span class="line">obj.weight &#x3D; 120; &#x2F;&#x2F; 在对象上设置一个新的属性</span><br><span class="line">obj.weight; &#x2F;&#x2F; 只打印120</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ES 6 Proxy 代码：</span><br><span class="line">const proxyObj &#x3D; new Proxy(&#123;age: 5, height: 4&#125;, &#123;</span><br><span class="line">    get(targetObj, _property) &#123;</span><br><span class="line">        console.log(&#96;getting the $&#123;_property&#125; property&#96;);</span><br><span class="line">        console.log(targetObj[_property]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">proxyObj.age; &#x2F;&#x2F; 打印 &#39;getting the age property&#39; 和 5</span><br><span class="line">proxyObj.height; &#x2F;&#x2F; 打印 &#39;getting the height property&#39; 和 4</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 不一样的地方:</span><br><span class="line">proxyObj.weight &#x3D; 120; &#x2F;&#x2F; 在对象上设置一个新的属性</span><br><span class="line">proxyObj.weight; &#x2F;&#x2F; 打印 &#39;getting the weight property&#39; 和 120</span><br></pre></td></tr></table></figure>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><ul>
+<li>使用 new Proxy() 构造函数</li>
+<li>将被代理的对象传入为第一项</li>
+<li>第二个对象是 handler（处理器）对象</li>
+<li>handler 对象由 13 种不同的 trap 之一构成</li>
+<li>trap 是一种函数，将截获对属性的调用，让你运行代码，如果未定义trap，默认行为会被发送给目标对象<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 未定义 trap</span><br><span class="line">var richard &#x3D; &#123;status: &#39;looking for work&#39;&#125;;</span><br><span class="line">var agent &#x3D; new Proxy(richard, &#123;&#125;);</span><br><span class="line"></span><br><span class="line">agent.status; &#x2F;&#x2F; 返回 &#39;looking for work&#39;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/19/ES6%20%E6%96%B0%E9%9B%86%E5%90%88/">ES6 新集合</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-19T06:17:27.000Z" itemprop="datePublished">
+    2019-12-19
+  </time>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>Set 是唯一项的集合，集合中每一项都是唯一的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 创建 Set</span><br><span class="line">const games &#x3D; new Set();</span><br><span class="line">&#x2F;&#x2F; 或</span><br><span class="line">const games &#x3D; new Set([&#39;Super Mario Bros.&#39;, &#39;Banjo-Kazooie&#39;, &#39;Mario Kart&#39;, &#39;Super Mario Bros.&#39;]);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 添加 (重复不会报错，但不添加)</span><br><span class="line">games.add(&#39;Banjo-Tooie&#39;);</span><br><span class="line">games.add(&#39;Age of Empires&#39;);</span><br><span class="line">&#x2F;&#x2F; 删除 (返回布尔值)</span><br><span class="line">games.delete(&#39;Super Mario Bros.&#39;);</span><br><span class="line">&#x2F;&#x2F; 清空集合</span><br><span class="line">games.clear()</span><br><span class="line">&#x2F;&#x2F; 使用 .size 属性可以返回 Set 中的条目数(像 length)：</span><br><span class="line">console.log(games.size);</span><br><span class="line">&#x2F;&#x2F; 检查是否存在</span><br><span class="line">console.log(games.has(&#39;September&#39;));</span><br><span class="line">&#x2F;&#x2F; 检索所有值</span><br><span class="line">console.log(months.values());</span><br><span class="line">&#x2F;&#x2F; 使用 SetIterator 迭代</span><br><span class="line">const iterator &#x3D; months.values();</span><br><span class="line">iterator.next();</span><br><span class="line">&#x2F;&#x2F; for...of 迭代</span><br><span class="line">const colors &#x3D; new Set([&#39;red&#39;, &#39;orange&#39;, &#39;yellow&#39;, &#39;green&#39;, &#39;blue&#39;, &#39;violet&#39;, &#39;brown&#39;, &#39;black&#39;]);</span><br><span class="line">for (const color of colors) &#123;</span><br><span class="line">  console.log(color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="WeakSet"><a href="#WeakSet" class="headerlink" title="WeakSet"></a>WeakSet</h3><p>和 Set 的区别：</p>
+<ul>
+<li>WeakSet 只能包含对象</li>
+<li>WeakSet 无法迭代，意味着不能循环访问其中的对象</li>
+<li>WeakSet 没有 .clear() 方法</li>
+<li>WeakSet中的对象都是弱引用，即垃圾回收机制不考虑WeakSet对该对象的引用，也就是说，如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存，不考虑该对象还存在于WeakSet之中。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const student1 &#x3D; &#123; name: &#39;James&#39;, age: 26, gender: &#39;male&#39; &#125;;</span><br><span class="line">const student2 &#x3D; &#123; name: &#39;Julia&#39;, age: 27, gender: &#39;female&#39; &#125;;</span><br><span class="line">const student3 &#x3D; &#123; name: &#39;Richard&#39;, age: 31, gender: &#39;male&#39; &#125;;</span><br><span class="line"></span><br><span class="line">const roster &#x3D; new WeakSet([student1, student2, student3]);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 添加对象以外的内容会报错</span><br></pre></td></tr></table></figure>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3>Map 像对象, Set 像数组</li>
+<li>但是 “键” 的范围不限于字符串，各种类型的值（包括对象）都可以当作键<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 创建(不能用值列表创建)</span><br><span class="line">const employees &#x3D; new Map();</span><br><span class="line">&#x2F;&#x2F; 添加</span><br><span class="line">employees.set(&#39;james.parkes@udacity.com&#39;, &#123;</span><br><span class="line">    firstName: &#39;James&#39;,</span><br><span class="line">    lastName: &#39;Parkes&#39;,</span><br><span class="line">    role: &#39;Content Developer&#39;</span><br><span class="line">&#125;);</span><br><span class="line">employees.set(&#39;julia@udacity.com&#39;, &#123;</span><br><span class="line">    firstName: &#39;Julia&#39;,</span><br><span class="line">    lastName: &#39;Van Cleve&#39;,</span><br><span class="line">    role: &#39;Content Developer&#39;</span><br><span class="line">&#125;);</span><br><span class="line">employees.set(&#39;richard@udacity.com&#39;, &#123;</span><br><span class="line">    firstName: &#39;Richard&#39;,</span><br><span class="line">    lastName: &#39;Kalehoff&#39;,</span><br><span class="line">    role: &#39;Content Developer&#39;</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F; 删除</span><br><span class="line">employees.delete(&#39;julia@udacity.com&#39;);</span><br><span class="line">&#x2F;&#x2F; 清空</span><br><span class="line">employees.clear()</span><br><span class="line">&#x2F;&#x2F; 检查</span><br><span class="line">console.log(employees.has(&#39;Xavier&#39;));</span><br><span class="line">&#x2F;&#x2F; 访问</span><br><span class="line">console.log(employees.get(&#39;Evelyn&#39;));</span><br></pre></td></tr></table></figure>
+在 Map 上使用 <code>.keys()</code> 和 <code>.values()</code> 方法将返回新的迭代器对象,叫做 <code>MapIterator</code>。你可以将该迭代器对象存储在新的变量中，并使用 <code>.next()</code> 循环访问每个键或值。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let iteratorObj &#x3D; members.keys();</span><br><span class="line">&#x2F;&#x2F; 或</span><br><span class="line">let iteratorObj &#x3D; members.values();</span><br><span class="line"></span><br><span class="line">iteratorObj.next();</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="WeakMap"><a href="#WeakMap" class="headerlink" title="WeakMap"></a>WeakMap</h3>和 WeakSet 差不多</li>
+<li>WeakMap 只能包含对象作为键，</li>
+<li>WeakMap 无法迭代，意味着无法循环访问，并且</li>
+<li>WeakMap 没有 .clear() 方法。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3>在es6中，能表示“集合”概念的数据类型大致有四种。<br>Array,Object,Map,Set<br>既然是集合，那遍历便是一种基本需求。而Iterator就是为了提供一种统一的接口机制。任何的数据结构，只要部署了Iterator接口，便可以使用类似的方式完成遍历操作。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 给对象部署 Iterator 接口</span><br><span class="line">const james &#x3D; &#123;</span><br><span class="line">    name: &#39;James&#39;,</span><br><span class="line">    height: &#96;5&#39;10&quot;&#96;,</span><br><span class="line">    weight: 185,</span><br><span class="line">    [Symbol.iterator]()&#123;</span><br><span class="line">        let properties &#x3D; Object.keys(this);</span><br><span class="line">        let index &#x3D; 0;</span><br><span class="line">        let contex &#x3D; this;</span><br><span class="line">        return &#123;</span><br><span class="line">          next() &#123;</span><br><span class="line">            return &#123;&quot;value&quot;:contex[properties[index]], &quot;key&quot;:properties[index], &quot;done&quot;:Boolean(index++ &gt;&#x3D; properties.length - 1) &#125;;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const iterator &#x3D; james[Symbol.iterator]();</span><br><span class="line"></span><br><span class="line">console.log(iterator.next().value); &#x2F;&#x2F; &#39;James&#39;</span><br><span class="line">console.log(iterator.next().value); &#x2F;&#x2F; &#96;5&#39;10&#96;</span><br><span class="line">console.log(iterator.next().value); &#x2F;&#x2F; 185</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/19/ES6%20const/">ES6 let</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-19T06:17:11.000Z" itemprop="datePublished">
+    2019-12-19
+  </time>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <h1 id="let-声明的变量只在它所在的代码块有效。"><a href="#let-声明的变量只在它所在的代码块有效。" class="headerlink" title="let 声明的变量只在它所在的代码块有效。"></a>let 声明的变量只在它所在的代码块有效。</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  let a &#x3D; 10;</span><br><span class="line">  var b &#x3D; 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a &#x2F;&#x2F; 报错</span><br><span class="line">b &#x2F;&#x2F; 1</span><br></pre></td></tr></table></figure>
+<h1 id="let-不存在变量提升"><a href="#let-不存在变量提升" class="headerlink" title="let 不存在变量提升"></a>let 不存在变量提升</h1><p><strong>变量提升包含「创建、初始化和赋值」的过程。</strong></p>
+<p>下面回顾下变量声明和函数声明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function fn()&#123;</span><br><span class="line">  var x &#x3D; 1</span><br><span class="line">  var y &#x3D; 2</span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br><span class="line">&#x2F;&#x2F; fn()是一个作用域，不解释</span><br><span class="line">&#x2F;&#x2F; fn()里的 x 和 y 被「创建」</span><br><span class="line">&#x2F;&#x2F; x 和 y 被「初始化」为 undefined</span><br><span class="line">&#x2F;&#x2F; 他喵的开始执行了！</span><br><span class="line">&#x2F;&#x2F; x &#x3D; 1 将 x 变量「赋值」为 1</span><br><span class="line">&#x2F;&#x2F; y &#x3D; 2 将 y 变量「赋值」为 2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fn2()</span><br><span class="line"></span><br><span class="line">function fn2()&#123;</span><br><span class="line">  console.log(2)</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 找到所有用 function 声明的变量，在环境中「创建」这些变量。</span><br><span class="line">&#x2F;&#x2F; 将这些变量「初始化」并「赋值」为 function()&#123; console.log(2) &#125;。</span><br><span class="line">&#x2F;&#x2F; 他喵的开始执行了！</span><br></pre></td></tr></table></figure>
+<p>下面再来看看 Let 的声明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  let x &#x3D; 1</span><br><span class="line">  x &#x3D; 2</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 被 let 声明的 x, 在环境中「创建」</span><br><span class="line">&#x2F;&#x2F; 他喵的开始执行了！</span><br><span class="line">&#x2F;&#x2F; 执行 x &#x3D; 1，将 x 「初始化」为 1</span><br><span class="line">&#x2F;&#x2F; 执行 x &#x3D; 2，对 x 进行「赋值」</span><br></pre></td></tr></table></figure>
+<p>这就可以看出它们执行前的状态：</p>
+<ol>
+<li>let 的「创建」过程被提升了，但是初始化没有提升。</li>
+<li>var 的「创建」和「初始化」都被提升了。</li>
+<li>function 的「创建」「初始化」和「赋值」都被提升了。</li>
+</ol>
+<h1 id="暂时性死区"><a href="#暂时性死区" class="headerlink" title="暂时性死区"></a>暂时性死区</h1><p><strong>使用let声明变量时，只要变量在还没有声明完成前使用，就会报错。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">if (true) &#123;</span><br><span class="line">  &#x2F;&#x2F; TDZ开始</span><br><span class="line">  tmp &#x3D; &#39;abc&#39;; &#x2F;&#x2F; ReferenceError</span><br><span class="line">  console.log(tmp); &#x2F;&#x2F; ReferenceError</span><br><span class="line"></span><br><span class="line">  let tmp; &#x2F;&#x2F; TDZ结束</span><br><span class="line">  console.log(tmp); &#x2F;&#x2F; undefined</span><br><span class="line"></span><br><span class="line">  tmp &#x3D; 123;</span><br><span class="line">  console.log(tmp); &#x2F;&#x2F; 123</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="不允许重复声明"><a href="#不允许重复声明" class="headerlink" title="不允许重复声明"></a>不允许重复声明</h1><h4 id="for-循环谜题："><a href="#for-循环谜题：" class="headerlink" title="for 循环谜题："></a>for 循环谜题：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var liList &#x3D; document.querySelectorAll(&#39;li&#39;) &#x2F;&#x2F; 共5个li</span><br><span class="line">for( let i&#x3D;0; i&lt;liList.length; i++)&#123;</span><br><span class="line">  liList[i].onclick &#x3D; function()&#123;</span><br><span class="line">    console.log(i)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用 Babel 转 ES5语法后，你会发现其实上面的代码不是表面看上去的那样，而是经历了以下的过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#39;use strict&#39;;</span><br><span class="line"></span><br><span class="line">var liList &#x3D; document.querySelectorAll(&#39;li&#39;); &#x2F;&#x2F; 共5个li</span><br><span class="line"></span><br><span class="line">var _loop &#x3D; function _loop(i) &#123;</span><br><span class="line">  liList[i].onclick &#x3D; function () &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">for (var i &#x3D; 0; i &lt; liList.length; i++) &#123;</span><br><span class="line">  _loop(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ES6 之前我们通过自执行函数“造”一个块作用域，来解决问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var liList &#x3D;document.querySelectorAll(&#39;li&#39;) &#x2F;&#x2F; 共5个li</span><br><span class="line">for(var i &#x3D; 0; i &lt; liList.length; i++)&#123;</span><br><span class="line">  liList[i].onclick &#x3D; (function(i)&#123;</span><br><span class="line">    return function()&#123;</span><br><span class="line">      console.log(i)</span><br><span class="line">    &#125;    </span><br><span class="line">  &#125;)(i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; return 里面的 console.log 查找到作用域链上层那个 i 就停止了，也就是作为参数的那个 i</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/19/%E4%BD%A0%E5%BF%85%E9%A1%BB%E4%BA%86%E8%A7%A3%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AF%AD%E8%A8%80%E7%9F%A5%E8%AF%86/">你必须了解的程序语言知识</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-19T06:15:42.000Z" itemprop="datePublished">
+    2019-12-19
+  </time>
+  
+  | 
+  <ul>
+    
+  <li class="meta-text">
+  { <a href="/tags/%E7%A8%8B%E5%BA%8F%E8%AF%AD%E8%A8%80/">程序语言</a> }
+  </li>
+
+
+  </ul>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <h2 id="编译-解释-JIT"><a href="#编译-解释-JIT" class="headerlink" title="编译 解释 JIT"></a>编译 解释 JIT</h2><p>编译？<br>一个代码编译成另外一种代码，编译到机器码，目标代码就是机器码。但只能跑在某个体系结构上，跑在不同的机器上机器码可能不一样，当部署到另一台机器时又要重新编译。</p>
+<p>解释？<br>c 语言是统一的，那我用 c 语言写出一个虚拟机，这个机器是可以部署到任何机器上，你使用 python 语言，语言逐条转换成对应的虚拟机指令，这样就可以跨平台了。</p>
+<p>JIT just in time compiler 把最热的代码替换成编译到机器码</p>
+<h2 id="动态-静态"><a href="#动态-静态" class="headerlink" title="动态 静态"></a>动态 静态</h2><p>静态语言 赋值了某种类型就不能赋值别的类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; &#39;&#39; &#x2F;&#x2F; 赋值了 String 类型</span><br><span class="line">a &#x3D; &#39;hello&#39; &#x2F;&#x2F; 可以，因为 &#39;hello&#39; 是 String</span><br><span class="line">a &#x3D; True &#x2F;&#x2F; 不行，因为是一个布尔值</span><br><span class="line">a &#x3D; 1 &#x2F;&#x2F; 不行，因为是一个 Number</span><br></pre></td></tr></table></figure>
+<p>动态语言 随便赋值，没有限制。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; &#39;&#39; &#x2F;&#x2F; 赋值了 String 类型</span><br><span class="line">a &#x3D; &#39;hello&#39; &#x2F;&#x2F; 可以，无所谓</span><br><span class="line">a &#x3D; True &#x2F;&#x2F; 可以，无所谓</span><br><span class="line">a &#x3D; 1 &#x2F;&#x2F; 可以，无所谓</span><br></pre></td></tr></table></figure>
+<h2 id="强类型-弱类型"><a href="#强类型-弱类型" class="headerlink" title="强类型 弱类型"></a>强类型 弱类型</h2><p>不同类型能不能做四则运算，能就是弱类型，不能就是强类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 + &#39;1&#39; &#x2F;&#x2F; String + Number 强类型不可以，弱类型可以</span><br></pre></td></tr></table></figure>
+<h2 id="有-GC-无GC"><a href="#有-GC-无GC" class="headerlink" title="有 GC 无GC"></a>有 GC 无GC</h2><p>GC garbage collection 垃圾回收</p>
+<p>没垃圾回收的语言 new 后需要 delete, 不然会内存泄漏，写崩掉。</p>
+<p>有垃圾回收的语言不用管</p>
+<h2 id="编程语言特性"><a href="#编程语言特性" class="headerlink" title="编程语言特性"></a>编程语言特性</h2>
+      
+    </div>
+</article>
+
+    </li>
+  
+</ul>
+
+  <section id="nav-wrapper">
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">next »</a>
+    </nav>
+  </section>
 
 
             <footer>

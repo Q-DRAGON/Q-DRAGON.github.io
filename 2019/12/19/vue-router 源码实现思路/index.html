@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue-router 源码实现思路 | Hexo</title>
+  
+  
+  
+  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css"-->
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+<div class="Shell">
+    <aside class='SideBar'>
+    <section class='avatar' style="background-image: url()">
+        <div class='av-pic' style="background-image: url()">
+        </div>
+    </section>
+    <section class='menu'>
+        <div>Hexo</div>
+        
+        <ul>
+          
+            <a href="/" class="Btn">
+              <li>Home</li>
+            </a>  
+          
+            <a href="/archives/" class="Btn">
+              <li>Archive</li>
+            </a>  
+          
+        </ul>
+    </section>
+    <section class="media">
+        
+    </section>
+</aside>
+
+    <div class="container">
+        <div data-pager-shell>
+            <div>
+  <article class='ContentView'>
+    <header class='PageTitle'>
+        <h1>vue-router 源码实现思路</h1>
+    </header>
+
+    <section>
+      <h1 id="vue-router-主要实现四个东西"><a href="#vue-router-主要实现四个东西" class="headerlink" title="vue-router 主要实现四个东西:"></a>vue-router 主要实现四个东西:</h1><ol>
+<li>router-link(超链接)</li>
+<li>router-view(点击超链接后要展示的视图)</li>
+<li>this.$router(vue api)</li>
+<li>this.$route(vue api)</li>
+</ol>
+<h2 id="History-and-Hash"><a href="#History-and-Hash" class="headerlink" title="History and Hash:"></a>History and Hash:</h2><p>单页路由是用原生的 BOM api 实现的，这里先来理解原生 BOM 的 hash 和 history。</p>
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash:"></a>Hash:</h3><p>这里面的 DOM 就是用 hash 的字符串显示，故取 hash 插入<br><img src="images/vue-router源码/1.jpg"></p>
+<h3 id="History"><a href="#History" class="headerlink" title="History:"></a>History:</h3><img src="images/vue-router源码/2.jpg">
+<img src="images/vue-router源码/3.jpg">
+
+
+
+
+
+<h2 id="当你-new-Vue-router-时，你会创建一个实例。vue-use-会调用-install-方法"><a href="#当你-new-Vue-router-时，你会创建一个实例。vue-use-会调用-install-方法" class="headerlink" title="当你 new Vue router 时，你会创建一个实例。vue.use 会调用 install 方法"></a>当你 new Vue router 时，你会创建一个实例。vue.use 会调用 install 方法</h2><img src="images/vue-router源码/4.jpg">
+
+
+
+<h2 id="vueRouter类里有这些东西："><a href="#vueRouter类里有这些东西：" class="headerlink" title="vueRouter类里有这些东西："></a>vueRouter类里有这些东西：</h2><ol>
+<li>createMap 把你传进去的 routes 数组 变成  {‘/home’: Home…} 这种 object 的结构，这样可以方便 VueRouter 类封装一些操作。<img src="images/vue-router源码/5.jpg">
+<img src="images/vue-router源码/6.jpg">
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li>init() 初始化，用条件语句判断你时 hash 还是 history，如果时 hash, 然后把 hash 存进 current.方便封装操作。<img src="images/vue-router源码/7.jpg">
+
+
+</li>
+</ol>
+<p>VueRouter 类还有些其他东西，省略。</p>
+<h2 id="this-router-和-this-route-的实现："><a href="#this-router-和-this-route-的实现：" class="headerlink" title="this.$router 和 this.$route 的实现："></a>this.$router 和 this.$route 的实现：</h2><h3 id="this-router-的实现"><a href="#this-router-的实现" class="headerlink" title="this.router 的实现:"></a>this.router 的实现:</h3><p>先通过 this$options 拿到根组件，因为有 this.$options 的一定是根组件，是根组件就直接赋值给 _root，不是根组件，那么就是子组件，子组件的话，拿到子组件的父亲，自然就是根组件, 再赋值给_root</p>
+<p>当你调用 this.$router 时会调用 get() 里的 ruturn this._root._router<br><img src="images/vue-router源码/8.jpg"></p>
+<h3 id="this-route-的实现："><a href="#this-route-的实现：" class="headerlink" title="this.route 的实现："></a>this.route 的实现：</h3><p>当你调用 this.$route 时会调用 get() 里的 ruturn { this._root._router.history.current }<br><img src="images/vue-router源码/9.jpg"></p>
+<h2 id="router-link-和-router-view-的实现："><a href="#router-link-和-router-view-的实现：" class="headerlink" title="router-link 和 router-view 的实现："></a>router-link 和 router-view 的实现：</h2><p>绑定全局组件做渲染<br><img src="images/vue-router源码/10.jpg"></p>
+<h3 id="router-link-的实现："><a href="#router-link-的实现：" class="headerlink" title="router-link 的实现："></a>router-link 的实现：</h3><p>利用类似 ES6 模板字符串的方式，插入一个标签。<br><img src="images/vue-router源码/11.jpg"></p>
+<h3 id="router-view-的实现"><a href="#router-view-的实现" class="headerlink" title="router-view 的实现:"></a>router-view 的实现:</h3><p>找到当前的 history，然后找到routeMap object 里对应的组件，然后做渲染。<br><img src="images/vue-router源码/12.jpg"></p>
+
+
+      
+
+    </section>
+    
+      <section class='ArticleMeta'>
+          <div>
+            发布于&nbsp;
+            <time datetime="2019-12-19T06:45:27.000Z" itemprop="datePublished">
+              2019-12-19
+            </time>
+          </div>
+          
+      </section>
+    
+    
+</article>
+
+  
+</div>
+
+            <footer>
+    <div>© 2019 - John Doe </div>
+    <div>
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+        </span>
+        ,
+        <span>
+            Theme - <a href="https://github.com/nameoverflow/hexo-theme-icalm" target="_blank" rel="noopener">Icalm</a>
+        </span>
+    </div>
+</footer>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/pager/dist/singlepager.js"></script>
+
+<script>
+var sp = new Pager('data-pager-shell')
+
+</script>
+</body>
+</html>

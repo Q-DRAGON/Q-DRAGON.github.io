@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>你必须了解的操作系统知识 | Hexo</title>
+  
+  
+  
+  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css"-->
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+<div class="Shell">
+    <aside class='SideBar'>
+    <section class='avatar' style="background-image: url()">
+        <div class='av-pic' style="background-image: url()">
+        </div>
+    </section>
+    <section class='menu'>
+        <div>Hexo</div>
+        
+        <ul>
+          
+            <a href="/" class="Btn">
+              <li>Home</li>
+            </a>  
+          
+            <a href="/archives/" class="Btn">
+              <li>Archive</li>
+            </a>  
+          
+        </ul>
+    </section>
+    <section class="media">
+        
+    </section>
+</aside>
+
+    <div class="container">
+        <div data-pager-shell>
+            <div>
+  <article class='ContentView'>
+    <header class='PageTitle'>
+        <h1>你必须了解的操作系统知识</h1>
+    </header>
+
+    <section>
+      <h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><p>在以前，DOS 里内存是程序自己控制的，这造成了问题， 比如 B 程序操作 A 程序的内存，会导致 A 程序挂掉。<br>而 windows 是统一的内存空间，<strong>每个程序看到的都是 4g 内存</strong>(每个程序看到的都是 4g 空间内存地址是相同的，从多少到多少)，<strong>但每个程序操作的 4g 空间是不同的</strong>，涉及一个概念叫<br><strong>虚拟存储器</strong></p>
+<h3 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h3><p>程序加载的步骤：</p>
+<ol>
+<li>CPU N 核心 ALU 计算单元 从 cpu寄存器 拿东西(最快的地方)，往下</li>
+<li>每个核心都有缓存 L1 L2</li>
+<li>整个 CPU 的缓存 L3 大约 3M</li>
+<li>内存</li>
+<li>硬盘</li>
+<li>网络传输最慢，比硬盘还慢</li>
+</ol>
+<p>虚拟存储器是统一的内存模型，举个例子：</p>
+<blockquote>
+<p>一个程序 4G = 内存 + 硬盘的总合</p>
+</blockquote>
+<h4 id="虚拟存储器实例"><a href="#虚拟存储器实例" class="headerlink" title="虚拟存储器实例"></a>虚拟存储器实例</h4><p>假设电脑有 4G 空间<br>A 程序 大小1G -&gt; 内存中<br>B 程序 大小1G -&gt; 内存中<br>A 程序 和 B 程序 看到的 1G<br>内存地址是一样，那么怎么取呢？</p>
+<p><strong>是靠页表，页表可以把虚拟的地址和真实的地址一一对应</strong></p>
+<p>这时来了个<br>C 程序 大小3G -&gt; 内存中</p>
+<p>真实内存剩 2G 不够了，只有把 A 或 B 转储出去，把 C 程序 load 进来</p>
+<p>我再加载 A 程序，还剩 1G 内存，完全够的，那么把 A 程序 load 进来</p>
+<p>我再加载 B 程序，不够了，那就把 A 程序转储出去， 换 B 进来。</p>
+<p>我这时又来了 D 程序 大小 5G, 把内存中的程序转储出去，把 D 程序 第一阶段要运行的指令加载进去，完成后把第一阶段的指令转储出去，再把 D 程序 第二阶段的指令加载进去…</p>
+<p>A + B + C = 5G<br>D = 5G<br>但我的 4G 内存却可以运行 3 个合计占用 5G 内存的一堆程序靠的就是虚拟存储器</p>
+<blockquote>
+<p>缺点就是速度会拖慢，这就是很多时候算法时间，空间复杂度和别人一样，却比别人慢的原因。</p>
+</blockquote>
+<h4 id="这个页表查询，转储的过程是什么样的呢？"><a href="#这个页表查询，转储的过程是什么样的呢？" class="headerlink" title="这个页表查询，转储的过程是什么样的呢？"></a>这个页表查询，转储的过程是什么样的呢？</h4><ol>
+<li>运行 A 程序   </li>
+<li>page(页表)，看看当前用的内存是在真实内存中？  </li>
+<li>如果不是，这个过程叫 page fault</li>
+<li>page load   </li>
+<li>正常运行</li>
+</ol>
+<p>如上的查询和转储，可以发生了123456 任意一个程序加载步骤之间，这叫 cache miss</p>
+<h2 id="驱动"><a href="#驱动" class="headerlink" title="驱动"></a>驱动</h2><p>举例说明，电脑上各种键盘，有 ps/2,usb,bluetooth, 不可能对每个设备写一个接口，你 应该写一个接口来适配所有的机器。<br>然后通过接口派生过去把驱动写好，对于所有的键盘，触发一个 K，永远都能在 操作系统 触发一个 K 的消息。</p>
+<p><strong>驱动是对硬件层的抽象，使你不用关心实现细节</strong></p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><p>把硬盘想象成数组：</p>
+<p>[meta 元信息，包含对应的文件位置（偏移量）和对应的文件大小]  </p>
+<p>格式化：会把所有信息抹掉<br>快速格式化：meta 清空(相当于清空索引)</p>
+<h2 id="进程线程"><a href="#进程线程" class="headerlink" title="进程线程"></a>进程线程</h2><p>进程是操作系统调动资源的最小单位。</p>
+<h3 id="多进程"><a href="#多进程" class="headerlink" title="多进程"></a>多进程</h3><p>多进程通过<strong>时间片</strong>实现,使各个程序从表面上看是同时进行的。</p>
+<p>时间片即 CPU 分配给各个程序的时间，<br>每个线程对应一个时间片。</p>
+<ol>
+<li>如果在时间片结束时进程还在运行，CPU 将打断这个进程分配给别人运行</li>
+<li>如果进程在时间片结束前阻塞或结束，则CPU当即进行切换。而不会造成CPU资源浪费。</li>
+</ol>
+<p>在宏观上：我们可以同时打开多个应用程序，每个程序并行不悖，同时运行。</p>
+<p>在微观上：由于只有一个CPU，一次只能处理程序要求的一部分，如何处理公平，一种方法就是引入时间片，每个程序轮流执行。</p>
+<h3 id="进程和线程的区别："><a href="#进程和线程的区别：" class="headerlink" title="进程和线程的区别："></a>进程和线程的区别：</h3><p><strong>进程通信</strong> Pipe,file,socket<br><strong>线程通信</strong> 每个线程都能看到进程中的全局数据</p>
+<p>对于一个进程来说，每个进程持有一张页表。<br>对于同一进程内的线程，每个线程都共享了同一张页表。</p>
+<blockquote>
+<p>因为每个进程持有不一样的页表，所以每个进程看到的文件是不同的</p>
+</blockquote>
+<h3 id="进程同步："><a href="#进程同步：" class="headerlink" title="进程同步："></a>进程同步：</h3><p>无论线程之间怎么穿插，运算结果都保证是正确的。</p>
+<p>进程同步有很多种方法，说一下互斥锁:  </p>
+<ol>
+<li>A 上锁</li>
+<li>A 干活</li>
+<li>A 解锁</li>
+<li>B 上锁<br>…</li>
+</ol>
+<p>加锁之后，一个线程拥有资源所有权，任何人不得干扰，等我结束后才解锁。</p>
+<h4 id="死锁："><a href="#死锁：" class="headerlink" title="死锁："></a>死锁：</h4><p>线程等不到资源，无法推进。根本原因是获取资源的顺序不一样。</p>
+<p>哲学家进餐</p>
+<ol>
+<li>调整最后一个人的顺序</li>
+<li>如果我拿不到右手，我左手也不要了</li>
+</ol>
+<h3 id="超线程："><a href="#超线程：" class="headerlink" title="超线程："></a>超线程：</h3><p>过去一核心跑一个线程，现在一核心跑几个线程，写程序时解决线程同步问题，这个程序的运行效率大大提升。</p>
+<h3 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行:"></a>并发和并行:</h3><p>并行：这些事情同一时刻进行</p>
+<p>并发：有多个线程，只要你系统能处理掉这些事情，就是并发的。比如像时间片</p>
+<h3 id="同步-异步"><a href="#同步-异步" class="headerlink" title="同步 异步:"></a>同步 异步:</h3><p>同步：事件发生与否，需要你自己去检查</p>
+<p>异步：事件发生与否，这个是别人通知你</p>
+<h3 id="阻塞-非阻塞："><a href="#阻塞-非阻塞：" class="headerlink" title="阻塞 非阻塞："></a>阻塞 非阻塞：</h3><p>执行到某个东西，需要等，那你等不等？</p>
+<p>阻塞：等<br>非阻塞：不等</p>
+<p>在你不等的情况下你怎么知道事情完没完？这就涉及到同步与异步，你如何得知事件发生与否的方式。</p>
+<blockquote>
+<p>阻塞也有同步异步，这是两个不同的概念</p>
+</blockquote>
+
+
+      
+
+    </section>
+    
+      <section class='ArticleMeta'>
+          <div>
+            发布于&nbsp;
+            <time datetime="2019-12-19T06:12:49.000Z" itemprop="datePublished">
+              2019-12-19
+            </time>
+          </div>
+          
+            <div>
+              tags: 
+  <li class="meta-text">
+  { <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a> }
+  </li>
+
+
+            </div>
+          
+      </section>
+    
+    
+</article>
+
+  
+</div>
+
+            <footer>
+    <div>© 2019 - John Doe </div>
+    <div>
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+        </span>
+        ,
+        <span>
+            Theme - <a href="https://github.com/nameoverflow/hexo-theme-icalm" target="_blank" rel="noopener">Icalm</a>
+        </span>
+    </div>
+</footer>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/pager/dist/singlepager.js"></script>
+
+<script>
+var sp = new Pager('data-pager-shell')
+
+</script>
+</body>
+</html>

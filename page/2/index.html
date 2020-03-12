@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Hexo</title>
+  
+  
+  
+  <!--link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css"-->
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.10.0/styles/github-gist.min.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+<div class="Shell">
+    <aside class='SideBar'>
+    <section class='avatar' style="background-image: url()">
+        <div class='av-pic' style="background-image: url()">
+        </div>
+    </section>
+    <section class='menu'>
+        <div>Hexo</div>
+        
+        <ul>
+          
+            <a href="/" class="Btn">
+              <li>Home</li>
+            </a>  
+          
+            <a href="/archives/" class="Btn">
+              <li>Archive</li>
+            </a>  
+          
+        </ul>
+    </section>
+    <section class="media">
+        
+    </section>
+</aside>
+
+    <div class="container">
+        <div data-pager-shell>
+            <ul class="Index">
+  
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/19/%E4%BD%A0%E5%BF%85%E9%A1%BB%E4%BA%86%E8%A7%A3%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86/">你必须了解的操作系统知识</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-19T06:12:49.000Z" itemprop="datePublished">
+    2019-12-19
+  </time>
+  
+  | 
+  <ul>
+    
+  <li class="meta-text">
+  { <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a> }
+  </li>
+
+
+  </ul>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><p>在以前，DOS 里内存是程序自己控制的，这造成了问题， 比如 B 程序操作 A 程序的内存，会导致 A 程序挂掉。<br>而 windows 是统一的内存空间，<strong>每个程序看到的都是 4g 内存</strong>(每个程序看到的都是 4g 空间内存地址是相同的，从多少到多少)，<strong>但每个程序操作的 4g 空间是不同的</strong>，涉及一个概念叫<br><strong>虚拟存储器</strong></p>
+<h3 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h3><p>程序加载的步骤：</p>
+<ol>
+<li>CPU N 核心 ALU 计算单元 从 cpu寄存器 拿东西(最快的地方)，往下</li>
+<li>每个核心都有缓存 L1 L2</li>
+<li>整个 CPU 的缓存 L3 大约 3M</li>
+<li>内存</li>
+<li>硬盘</li>
+<li>网络传输最慢，比硬盘还慢</li>
+</ol>
+<p>虚拟存储器是统一的内存模型，举个例子：</p>
+<blockquote>
+<p>一个程序 4G = 内存 + 硬盘的总合</p>
+</blockquote>
+<h4 id="虚拟存储器实例"><a href="#虚拟存储器实例" class="headerlink" title="虚拟存储器实例"></a>虚拟存储器实例</h4><p>假设电脑有 4G 空间<br>A 程序 大小1G -&gt; 内存中<br>B 程序 大小1G -&gt; 内存中<br>A 程序 和 B 程序 看到的 1G<br>内存地址是一样，那么怎么取呢？</p>
+<p><strong>是靠页表，页表可以把虚拟的地址和真实的地址一一对应</strong></p>
+<p>这时来了个<br>C 程序 大小3G -&gt; 内存中</p>
+<p>真实内存剩 2G 不够了，只有把 A 或 B 转储出去，把 C 程序 load 进来</p>
+<p>我再加载 A 程序，还剩 1G 内存，完全够的，那么把 A 程序 load 进来</p>
+<p>我再加载 B 程序，不够了，那就把 A 程序转储出去， 换 B 进来。</p>
+<p>我这时又来了 D 程序 大小 5G, 把内存中的程序转储出去，把 D 程序 第一阶段要运行的指令加载进去，完成后把第一阶段的指令转储出去，再把 D 程序 第二阶段的指令加载进去…</p>
+<p>A + B + C = 5G<br>D = 5G<br>但我的 4G 内存却可以运行 3 个合计占用 5G 内存的一堆程序靠的就是虚拟存储器</p>
+<blockquote>
+<p>缺点就是速度会拖慢，这就是很多时候算法时间，空间复杂度和别人一样，却比别人慢的原因。</p>
+</blockquote>
+<h4 id="这个页表查询，转储的过程是什么样的呢？"><a href="#这个页表查询，转储的过程是什么样的呢？" class="headerlink" title="这个页表查询，转储的过程是什么样的呢？"></a>这个页表查询，转储的过程是什么样的呢？</h4><ol>
+<li>运行 A 程序   </li>
+<li>page(页表)，看看当前用的内存是在真实内存中？  </li>
+<li>如果不是，这个过程叫 page fault</li>
+<li>page load   </li>
+<li>正常运行</li>
+</ol>
+<p>如上的查询和转储，可以发生了123456 任意一个程序加载步骤之间，这叫 cache miss</p>
+<h2 id="驱动"><a href="#驱动" class="headerlink" title="驱动"></a>驱动</h2><p>举例说明，电脑上各种键盘，有 ps/2,usb,bluetooth, 不可能对每个设备写一个接口，你 应该写一个接口来适配所有的机器。<br>然后通过接口派生过去把驱动写好，对于所有的键盘，触发一个 K，永远都能在 操作系统 触发一个 K 的消息。</p>
+<p><strong>驱动是对硬件层的抽象，使你不用关心实现细节</strong></p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><p>把硬盘想象成数组：</p>
+<p>[meta 元信息，包含对应的文件位置（偏移量）和对应的文件大小]  </p>
+<p>格式化：会把所有信息抹掉<br>快速格式化：meta 清空(相当于清空索引)</p>
+<h2 id="进程线程"><a href="#进程线程" class="headerlink" title="进程线程"></a>进程线程</h2><p>进程是操作系统调动资源的最小单位。</p>
+<h3 id="多进程"><a href="#多进程" class="headerlink" title="多进程"></a>多进程</h3><p>多进程通过<strong>时间片</strong>实现,使各个程序从表面上看是同时进行的。</p>
+<p>时间片即 CPU 分配给各个程序的时间，<br>每个线程对应一个时间片。</p>
+<ol>
+<li>如果在时间片结束时进程还在运行，CPU 将打断这个进程分配给别人运行</li>
+<li>如果进程在时间片结束前阻塞或结束，则CPU当即进行切换。而不会造成CPU资源浪费。</li>
+</ol>
+<p>在宏观上：我们可以同时打开多个应用程序，每个程序并行不悖，同时运行。</p>
+<p>在微观上：由于只有一个CPU，一次只能处理程序要求的一部分，如何处理公平，一种方法就是引入时间片，每个程序轮流执行。</p>
+<h3 id="进程和线程的区别："><a href="#进程和线程的区别：" class="headerlink" title="进程和线程的区别："></a>进程和线程的区别：</h3><p><strong>进程通信</strong> Pipe,file,socket<br><strong>线程通信</strong> 每个线程都能看到进程中的全局数据</p>
+<p>对于一个进程来说，每个进程持有一张页表。<br>对于同一进程内的线程，每个线程都共享了同一张页表。</p>
+<blockquote>
+<p>因为每个进程持有不一样的页表，所以每个进程看到的文件是不同的</p>
+</blockquote>
+<h3 id="进程同步："><a href="#进程同步：" class="headerlink" title="进程同步："></a>进程同步：</h3><p>无论线程之间怎么穿插，运算结果都保证是正确的。</p>
+<p>进程同步有很多种方法，说一下互斥锁:  </p>
+<ol>
+<li>A 上锁</li>
+<li>A 干活</li>
+<li>A 解锁</li>
+<li>B 上锁<br>…</li>
+</ol>
+<p>加锁之后，一个线程拥有资源所有权，任何人不得干扰，等我结束后才解锁。</p>
+<h4 id="死锁："><a href="#死锁：" class="headerlink" title="死锁："></a>死锁：</h4><p>线程等不到资源，无法推进。根本原因是获取资源的顺序不一样。</p>
+<p>哲学家进餐</p>
+<ol>
+<li>调整最后一个人的顺序</li>
+<li>如果我拿不到右手，我左手也不要了</li>
+</ol>
+<h3 id="超线程："><a href="#超线程：" class="headerlink" title="超线程："></a>超线程：</h3><p>过去一核心跑一个线程，现在一核心跑几个线程，写程序时解决线程同步问题，这个程序的运行效率大大提升。</p>
+<h3 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行:"></a>并发和并行:</h3><p>并行：这些事情同一时刻进行</p>
+<p>并发：有多个线程，只要你系统能处理掉这些事情，就是并发的。比如像时间片</p>
+<h3 id="同步-异步"><a href="#同步-异步" class="headerlink" title="同步 异步:"></a>同步 异步:</h3><p>同步：事件发生与否，需要你自己去检查</p>
+<p>异步：事件发生与否，这个是别人通知你</p>
+<h3 id="阻塞-非阻塞："><a href="#阻塞-非阻塞：" class="headerlink" title="阻塞 非阻塞："></a>阻塞 非阻塞：</h3><p>执行到某个东西，需要等，那你等不等？</p>
+<p>阻塞：等<br>非阻塞：不等</p>
+<p>在你不等的情况下你怎么知道事情完没完？这就涉及到同步与异步，你如何得知事件发生与否的方式。</p>
+<blockquote>
+<p>阻塞也有同步异步，这是两个不同的概念</p>
+</blockquote>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/19/%E7%AE%97%E6%B3%95%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/">算法代码实现</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-19T06:10:53.000Z" itemprop="datePublished">
+    2019-12-19
+  </time>
+  
+  | 
+  <ul>
+    
+  <li class="meta-text">
+  { <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a> }
+  </li>
+
+
+  </ul>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <h2 id="Queue-队列"><a href="#Queue-队列" class="headerlink" title="Queue 队列"></a>Queue 队列</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 队列结构</span><br><span class="line">&#x2F;&#x2F; 主要有 2 个操作</span><br><span class="line">&#x2F;&#x2F; enqueue dequeue</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">var Queue &#x3D; function() &#123;</span><br><span class="line">    &#x2F;&#x2F; data 是存储元素的数组</span><br><span class="line">    this.data &#x3D; []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 入队</span><br><span class="line">Queue.prototype.enqueue &#x3D; function (element) &#123;</span><br><span class="line">    this.data.push(element)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 出队</span><br><span class="line">Queue.prototype.dequeue &#x3D; function () &#123;</span><br><span class="line">    return this.data.splice(0, 1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 队列长度</span><br><span class="line">Queue.prototype.length &#x3D; function () &#123;</span><br><span class="line">    return this.data.length</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 清空队列</span><br><span class="line">Queue.prototype.empty &#x3D; function() &#123;</span><br><span class="line">    this.data &#x3D; []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; var q &#x3D; new Queue()</span><br><span class="line">&#x2F;&#x2F; q.enqueue(1)</span><br><span class="line">&#x2F;&#x2F; q.enqueue(2)</span><br><span class="line">&#x2F;&#x2F; q.enqueue(3)</span><br><span class="line">&#x2F;&#x2F; log(&#39;length&#39;, q.length())</span><br><span class="line">&#x2F;&#x2F; log(q.dequeue())</span><br><span class="line">&#x2F;&#x2F; q.enqueue(4)</span><br><span class="line">&#x2F;&#x2F; log(q.dequeue())</span><br><span class="line">&#x2F;&#x2F; log(q.dequeue())</span><br><span class="line">&#x2F;&#x2F; log(q.dequeue())</span><br></pre></td></tr></table></figure>
+
+<h2 id="Stack-栈"><a href="#Stack-栈" class="headerlink" title="Stack 栈"></a>Stack 栈</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Stack 栈</span><br><span class="line">&#x2F;&#x2F; 常见的 3 个操作</span><br><span class="line">&#x2F;&#x2F; push pop top</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">var Stack &#x3D; function() &#123;</span><br><span class="line">    this.data &#x3D; []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; push 添加一个元素</span><br><span class="line">Stack.prototype.push &#x3D; function(e) &#123;</span><br><span class="line">    this.data.push(e)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; pop 删除并返回最新添加的元素</span><br><span class="line">Stack.prototype.pop &#x3D; function() &#123;</span><br><span class="line">    var index &#x3D; this.data.length - 1</span><br><span class="line">    return this.data.splice(index, 1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; top 仅返回最新添加的元素</span><br><span class="line">Stack.prototype.top &#x3D; function() &#123;</span><br><span class="line">    var index &#x3D; this.data.length - 1</span><br><span class="line">    return this.data[index]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var s &#x3D; new Stack()</span><br><span class="line">s.push(&#39;hello&#39;)</span><br><span class="line">s.push(&#39;world&#39;)</span><br><span class="line">log(s.pop())</span><br><span class="line">log(s.pop())</span><br><span class="line"></span><br><span class="line">var str &#x3D; &#39;hello&#39;</span><br><span class="line">for (var i &#x3D; 0; i &lt; str.length; i++) &#123;</span><br><span class="line">    s.push(str[i])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var str1 &#x3D; &#39;&#39;</span><br><span class="line">for (var i &#x3D; 0; i &lt; str.length; i++) &#123;</span><br><span class="line">    str1 +&#x3D; s.pop(str[i])</span><br><span class="line">&#125;</span><br><span class="line">log(str1)</span><br></pre></td></tr></table></figure>
+<h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 链表</span><br><span class="line">&#x2F;&#x2F; LinkedList</span><br><span class="line">&#x2F;&#x2F; [1, 2, 3, 4, 15, 16, 27]</span><br><span class="line">&#x2F;&#x2F; [1, 2, 3, 0, 4, 5, 6, 7]</span><br><span class="line">*&#x2F;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 链表实现</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">var Node &#x3D; function(e) &#123;</span><br><span class="line">    this.element &#x3D; e</span><br><span class="line">    this.next &#x3D; null</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; var n1 &#x3D; new Node(1)</span><br><span class="line">&#x2F;&#x2F; var n2 &#x3D; new Node(2)</span><br><span class="line">&#x2F;&#x2F; var n3 &#x3D; new Node(3)</span><br><span class="line">&#x2F;&#x2F; n1.next &#x3D; n2</span><br><span class="line">&#x2F;&#x2F; n2.next &#x3D; n3</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">&#x2F;&#x2F; var n &#x3D; n1</span><br><span class="line">&#x2F;&#x2F; while(n !&#x3D; null) &#123;</span><br><span class="line">&#x2F;&#x2F;     log(&#39;遍历链表&#39;, n.element)</span><br><span class="line">&#x2F;&#x2F;     n &#x3D; n.next</span><br><span class="line">&#x2F;&#x2F; &#125;</span><br><span class="line"></span><br><span class="line">var LinkedList &#x3D; function() &#123;</span><br><span class="line">    this.head &#x3D; new Node()</span><br><span class="line">    this._length &#x3D; 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 在链表末尾增加一个元素</span><br><span class="line">LinkedList.prototype.append &#x3D; function(e) &#123;</span><br><span class="line">    var node &#x3D; new Node(e)</span><br><span class="line">    var n &#x3D; this.head</span><br><span class="line">    while(n.next !&#x3D; null) &#123;</span><br><span class="line">        n &#x3D; n.next</span><br><span class="line">    &#125;</span><br><span class="line">    n.next &#x3D; node</span><br><span class="line">    &#x2F;&#x2F;</span><br><span class="line">    this._length++</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 在链表中删除一个指定元素</span><br><span class="line">LinkedList.prototype.remove &#x3D; function(e) &#123;</span><br><span class="line">    &#x2F;&#x2F; 找到下标</span><br><span class="line">    &#x2F;&#x2F; var index &#x3D; this.indexOf(e)</span><br><span class="line">    var n &#x3D; this.head</span><br><span class="line">    while(e !&#x3D; n.element) &#123;</span><br><span class="line">        previous &#x3D; n</span><br><span class="line">        current &#x3D; n.next</span><br><span class="line">        n &#x3D; n.next</span><br><span class="line">    &#125;</span><br><span class="line">    previous.next &#x3D; current.next</span><br><span class="line">    &#x2F;&#x2F;</span><br><span class="line">    this._length--</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 返回一个元素的 index</span><br><span class="line">LinkedList.prototype.indexOf &#x3D; function(e) &#123;</span><br><span class="line">    var index &#x3D; -1</span><br><span class="line">    var n &#x3D; this.head</span><br><span class="line">    var i &#x3D; 0</span><br><span class="line">    while(n.next !&#x3D; null) &#123;</span><br><span class="line">        if (e &#x3D;&#x3D;&#x3D; n.element) &#123;</span><br><span class="line">            index &#x3D; i</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br><span class="line">        n &#x3D; n.next</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">    return index</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 返回链表的长度</span><br><span class="line">LinkedList.prototype.length &#x3D; function() &#123;</span><br><span class="line">    return this._length</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LinkedList.prototype.log &#x3D; function() &#123;</span><br><span class="line">    var n &#x3D; this.head.next</span><br><span class="line">    log(&#39;遍历链表&#39;)</span><br><span class="line">    while(n !&#x3D; null) &#123;</span><br><span class="line">        log(&#39; &gt; &#39;, n.element)</span><br><span class="line">        n &#x3D; n.next</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var list &#x3D; new LinkedList()</span><br><span class="line">list.append(&#39;hello&#39;)</span><br><span class="line">list.append(&#39;gua&#39;)</span><br><span class="line">list.append(&#39;你好&#39;)</span><br><span class="line">list.log()</span><br><span class="line">log(list.length())</span><br></pre></td></tr></table></figure>
+<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 使用 timeit 测量时间</span><br><span class="line"># 来对比 hashtable 和 list 的存取时间</span><br><span class="line"></span><br><span class="line">class HashTable(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        # table 是用来存储数据的数组</span><br><span class="line">        # 先让它有 10007 个格子好了</span><br><span class="line">        # 上课的时候说过, 这个尺寸最好选素数</span><br><span class="line">        # 这样可以得到更为合理的下标分布</span><br><span class="line">        self.table_size &#x3D; 10007</span><br><span class="line">        self.table &#x3D; [0] * self.table_size</span><br><span class="line"></span><br><span class="line">    # 这个魔法方法是用来实现 in  not in 语法的</span><br><span class="line">    def __contains__(self, item):</span><br><span class="line">        return self.has_key(item)</span><br><span class="line"></span><br><span class="line">    def has_key(self, key):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        检查一个 key 是否存在, 时间很短, 是 O(1)</span><br><span class="line">        如果用 list 来存储, 需要遍历, 时间是 O(n)</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        index &#x3D; self._index(key)</span><br><span class="line">        # 取元素</span><br><span class="line">        v &#x3D; self.table[index]</span><br><span class="line">        if isinstance(v, list):</span><br><span class="line">            # 检查是否包含我们要找的 key</span><br><span class="line">            for kv in v:</span><br><span class="line">                if kv[0] &#x3D;&#x3D; key:</span><br><span class="line">                    return True</span><br><span class="line">        # 如果得到的是 int 0 说明没找到, 返回 False</span><br><span class="line">        # 如果得到的是 list 但是遍历结果没有我们要找的 key 也是没找到</span><br><span class="line">        return False</span><br><span class="line"></span><br><span class="line">    def _insert_at_index(self, index, key, value):</span><br><span class="line">        # 检查下标处是否是第一次插入数据</span><br><span class="line">        v &#x3D; self.table[index]</span><br><span class="line">        data &#x3D; [key, value]</span><br><span class="line">        if isinstance(v, int):</span><br><span class="line">            # 如果是第一次, 得到的是 int 0</span><br><span class="line">            # 那么就插入一个 list 来存, 以后相同 key 的元素都放这里面</span><br><span class="line">            # 注意我们把 key value 作为一个数组保存进去了, 这是因为</span><br><span class="line">            # 会出现相同 hash 值的 key</span><br><span class="line">            # 这时候就需要比较原始信息来找到相应的数据</span><br><span class="line">            self.table[index] &#x3D; [data]</span><br><span class="line">        else:</span><br><span class="line">            # 如果不是, 得到的会是 list, 直接 append</span><br><span class="line">            self.table[index].append([data])</span><br><span class="line"></span><br><span class="line">    def add(self, key, value):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        add 函数往 hashtable 中加入一对元素</span><br><span class="line">        我们先只支持字符串当 key</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        # 先计算出下标</span><br><span class="line">        index &#x3D; self._index(key)</span><br><span class="line">        # 在下标处插入元素</span><br><span class="line">        self._insert_at_index(index, key, value)</span><br><span class="line"></span><br><span class="line">    def get(self, key, default_value&#x3D;None):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        这个和 dict 的 get 函数一样</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        index &#x3D; self._index(key)</span><br><span class="line">        # 取元素</span><br><span class="line">        v &#x3D; self.table[index]</span><br><span class="line">        if isinstance(v, list):</span><br><span class="line">            # 检查是否包含我们要找的 key</span><br><span class="line">            for kv in v:</span><br><span class="line">                if kv[0] &#x3D;&#x3D; key:</span><br><span class="line">                    return kv[1]</span><br><span class="line">        # 如果得到的是 int 0 说明没找到, 返回 default_value</span><br><span class="line">        # 如果得到的是 list 但是遍历结果没有我们要找的 key 也是没找到</span><br><span class="line">        return default_value</span><br><span class="line"></span><br><span class="line">    def _index(self, key):</span><br><span class="line">        # 先计算出下标</span><br><span class="line">        return self._hash(key) % self.table_size</span><br><span class="line"></span><br><span class="line">    def _hash(self, s):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        下划线开始的函数被我们视为私有函数</span><br><span class="line">        但实际上还是可以在外部调用, 这只是一个给自己看的标记</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        n &#x3D; 1</span><br><span class="line">        f &#x3D; 1</span><br><span class="line">        for i in s:</span><br><span class="line">            n +&#x3D; ord(i) * f</span><br><span class="line">            f *&#x3D; 10</span><br><span class="line">        return n</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test():</span><br><span class="line">    import uuid</span><br><span class="line">    names &#x3D; [</span><br><span class="line">        &#39;gua&#39;,</span><br><span class="line">        &#39;xiao&#39;,</span><br><span class="line">        &#39;name&#39;,</span><br><span class="line">        &#39;web&#39;,</span><br><span class="line">        &#39;python&#39;,</span><br><span class="line">    ]</span><br><span class="line">    ht &#x3D; HashTable()</span><br><span class="line">    for key in names:</span><br><span class="line">        value &#x3D; uuid.uuid4()</span><br><span class="line">        ht.add(key, value)</span><br><span class="line">        print(&#39;add 元素&#39;, key, value)</span><br><span class="line">    for key in names:</span><br><span class="line">        v &#x3D; ht.get(key)</span><br><span class="line">        print(&#39;get 元素&#39;, key, v)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    test()</span><br></pre></td></tr></table></figure>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">class Tree(object):</span><br><span class="line">    def __init__(self, element&#x3D;None):</span><br><span class="line">        self.element &#x3D; element</span><br><span class="line">        self.left &#x3D; None</span><br><span class="line">        self.right &#x3D; None</span><br><span class="line"></span><br><span class="line">    def traversal(self):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        树的遍历, 是一个递归操作</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        print(self.element)</span><br><span class="line">        if self.left is not None:</span><br><span class="line">            self.left.traversal()</span><br><span class="line">        if self.right is not None:</span><br><span class="line">            self.right.traversal()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test():</span><br><span class="line">    # 手动构建二叉树</span><br><span class="line">    # 为什么手动这么麻烦呢, 因为一般都是自动生成的</span><br><span class="line">    # 这里只需要掌握性质就好</span><br><span class="line">    t &#x3D; Tree(0)</span><br><span class="line">    left &#x3D; Tree(1)</span><br><span class="line">    right &#x3D; Tree(2)</span><br><span class="line">    t.left &#x3D; left</span><br><span class="line">    t.right &#x3D; right</span><br><span class="line">    # 遍历</span><br><span class="line">    t.traversal()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    test()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2019/12/04/hello-world/">Hello World</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2019-12-04T08:15:03.508Z" itemprop="datePublished">
+    2019-12-04
+  </time>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+</ul>
+
+  <section id="nav-wrapper">
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">« prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
+  </section>
+
+
+            <footer>
+    <div>© 2019 - John Doe </div>
+    <div>
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+        </span>
+        ,
+        <span>
+            Theme - <a href="https://github.com/nameoverflow/hexo-theme-icalm" target="_blank" rel="noopener">Icalm</a>
+        </span>
+    </div>
+</footer>
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/pager/dist/singlepager.js"></script>
+
+<script>
+var sp = new Pager('data-pager-shell')
+
+</script>
+</body>
+</html>
